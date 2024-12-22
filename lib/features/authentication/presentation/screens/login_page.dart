@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                                     ? null
                                     : "Please enter a valid email",
                             mycontroller: _email,
-                            hintText: "Email Address",
+                            hintText: "Email Address ",
                             obscureText: false,
                           ),
                           const SizedBox(height: 16),
