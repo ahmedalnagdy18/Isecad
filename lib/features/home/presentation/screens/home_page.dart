@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iscad/core/extentions/app_extentions.dart';
+import 'package:iscad/features/home/presentation/screens/data_page.dart';
 import 'package:iscad/features/home/presentation/widgets/list_view_body.dart';
 
 class HomePage extends StatelessWidget {
@@ -14,7 +15,7 @@ class HomePage extends StatelessWidget {
           horizontal: appWidth(context, 0.20),
         ),
         child: Padding(
-          padding: EdgeInsets.only(top: appHight(context, 0.08)),
+          padding: EdgeInsets.only(top: appHight(context, 0.25)),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -24,10 +25,21 @@ class HomePage extends StatelessWidget {
                 child: SizedBox(
                   width: appWidth(context, 0.22),
                   child: ListView.builder(
-                    itemCount: 7,
+                    itemCount: 3,
                     itemBuilder: (context, index) {
-                      return ListViewBody(
-                        title: titles1[index],
+                      return InkWell(
+                        onTap: () {
+                          index == 0
+                              ? Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const DataPage(),
+                                  ))
+                              : const SizedBox();
+                        },
+                        child: ListViewBody(
+                          title: titles1[index],
+                        ),
                       );
                     },
                   ),
@@ -39,7 +51,7 @@ class HomePage extends StatelessWidget {
                 child: SizedBox(
                   width: appWidth(context, 0.22),
                   child: ListView.builder(
-                    itemCount: 7,
+                    itemCount: 3,
                     itemBuilder: (context, index) {
                       return ListViewBody(
                         title: titles2[index],

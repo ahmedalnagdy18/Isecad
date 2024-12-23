@@ -5,7 +5,7 @@ class TextFieldWidget extends StatelessWidget {
   final String? hintText;
   final Widget? suffixIcon;
   final Widget? prefixIcon;
-  final bool obscureText;
+  final bool? obscureText;
   final TextInputType? keyboardType;
   final TextEditingController? mycontroller;
   final String? Function(String?)? validator;
@@ -26,7 +26,7 @@ class TextFieldWidget extends StatelessWidget {
     super.key,
     this.hintText,
     this.suffixIcon,
-    required this.obscureText,
+    this.obscureText,
     this.mycontroller,
     this.prefixIcon,
     this.keyboardType,
@@ -53,7 +53,7 @@ class TextFieldWidget extends StatelessWidget {
       focusNode: focusNode,
       style: const TextStyle(fontSize: 22),
       onChanged: onChanged,
-      obscureText: obscureText,
+      obscureText: obscureText ?? false,
       maxLength: maxLength,
       maxLines: maxLines ?? 1,
       controller: mycontroller,
