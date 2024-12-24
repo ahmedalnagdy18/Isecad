@@ -1,6 +1,6 @@
 # iscad
 
-A new Flutter project.
+A new Flutter Desktop App project.
 
 ## Getting Started
 
