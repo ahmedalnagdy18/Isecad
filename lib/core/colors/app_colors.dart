@@ -18,7 +18,7 @@ class AppColors {
   static Color hintText = const Color(0xFF9D9C99);
   static Color forgetPassword = const Color(0xFF6A717F);
   static Color appBarRed = const Color(0xFFFF2D55);
-  static Color errorColor = const Color(0xFFB71A2A);
+  static Color redColor = const Color(0xFFB71A2A);
   static Color errorOrangeColor = const Color(0xFFFF9139);
 
   // static Color n5 = const Color(0x002a3838);
@@ -35,22 +35,5 @@ class AppColors {
   static List<Color> mainToastmessage = const [
     Color(0xff04FFAA),
     Color(0xff00F2D0),
-  ];
-
-  static List<Color> onbording1 = [
-    const Color(0xff8B4EFF).withOpacity(0.40),
-    const Color(0xff6549FF).withOpacity(0.25),
-    const Color(0x056549FF).withOpacity(0.01)
-  ];
-  static List<Color> onbording2 = [
-    // from bottom to top
-    const Color(0xff00F2D0).withOpacity(0.40),
-    const Color(0xff00F2D0).withOpacity(0.17),
-    const Color(0xff00F2D0).withOpacity(0.01),
-  ];
-  static List<Color> onbording3 = [
-    const Color(0xff241C60).withOpacity(0.70),
-    const Color(0xff171047).withOpacity(0.50),
-    const Color(0xff171047).withOpacity(0.01),
   ];
 }

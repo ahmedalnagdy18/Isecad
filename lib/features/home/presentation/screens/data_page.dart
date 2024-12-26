@@ -37,16 +37,57 @@ class DataPage extends StatelessWidget {
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 24),
               child: Row(
-                //  crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TitleText(title: "الكود"),
-                  TitleText(title: "صاحب البطاقة"),
-                  TitleText(title: "عدد الارغفة"),
-                  TitleText(title: " اخر سحب"),
-                  TitleText(title: "تاريخ"),
-                  TitleText(title: "الاذن"),
-                  TitleText(title: "الاشتراك"),
+                  Column(
+                    children: [
+                      TitleText(title: "الكود"),
+                      Divider(),
+                      DataText(dataText: "45"),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      TitleText(title: "صاحب البطاقة"),
+                      Divider(),
+                      DataText(dataText: "اسم المستخدم "),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      TitleText(title: "عدد الارغفة"),
+                      Divider(),
+                      DataText(dataText: "15"),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      TitleText(title: "اخر سحب"),
+                      Divider(),
+                      DataText(dataText: "5"),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      TitleText(title: "تاريخ"),
+                      Divider(),
+                      DataText(dataText: "20 اغسطس 12:34"),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      TitleText(title: "الاذن"),
+                      Divider(),
+                      DataText(dataText: "5"),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      TitleText(title: "الاشتراك"),
+                      Divider(),
+                      DataText(dataText: "الاشتراك"),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -58,24 +99,7 @@ class DataPage extends StatelessWidget {
                 color: Colors.grey,
               ),
             ),
-            const SizedBox(height: 16),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24),
-              child: Row(
-                //  crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  DataText(dataText: "45"),
-                  DataText(dataText: "اسم المستخدم "),
-                  DataText(dataText: "15"),
-                  DataText(dataText: "5"),
-                  DataText(dataText: "40"),
-                  DataText(dataText: " 20  اغسطس 12:34"),
-                  DataText(dataText: "الاشتراك"),
-                ],
-              ),
-            ),
-            SizedBox(height: appHight(context, 0.19)),
+            SizedBox(height: appHight(context, 0.10)),
             const TextFieldWidget(),
             SizedBox(height: appHight(context, 0.12)),
             Expanded(

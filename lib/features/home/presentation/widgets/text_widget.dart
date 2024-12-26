@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iscad/core/colors/app_colors.dart';
 
 class TitleText extends StatelessWidget {
   const TitleText({super.key, required this.title});
@@ -9,7 +10,7 @@ class TitleText extends StatelessWidget {
       title,
       style: const TextStyle(
         color: Colors.black,
-        fontWeight: FontWeight.w700,
+        fontWeight: FontWeight.bold,
       ),
     );
   }
@@ -22,8 +23,8 @@ class DataText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       dataText,
-      style: const TextStyle(
-        color: Colors.black,
+      style: TextStyle(
+        color: AppColors.redColor,
       ),
     );
   }
