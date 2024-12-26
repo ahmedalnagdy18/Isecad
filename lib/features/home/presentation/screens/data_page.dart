@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:iscad/core/common/textfield.dart';
 import 'package:iscad/core/extentions/app_extentions.dart';
-import 'package:iscad/features/home/presentation/widgets/list_view_body.dart';
 import 'package:iscad/features/home/presentation/widgets/text_widget.dart';
 
 class DataPage extends StatelessWidget {
@@ -37,7 +37,7 @@ class DataPage extends StatelessWidget {
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 24),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Column(
                     children: [
@@ -48,44 +48,23 @@ class DataPage extends StatelessWidget {
                   ),
                   Column(
                     children: [
-                      TitleText(title: "صاحب البطاقة"),
+                      TitleText(title: "الصنف"),
                       Divider(),
-                      DataText(dataText: "اسم المستخدم "),
+                      DataText(dataText: "اسم الصنف "),
                     ],
                   ),
                   Column(
                     children: [
-                      TitleText(title: "عدد الارغفة"),
+                      TitleText(title: "الكمية"),
                       Divider(),
                       DataText(dataText: "15"),
                     ],
                   ),
                   Column(
                     children: [
-                      TitleText(title: "اخر سحب"),
+                      TitleText(title: "السعر"),
                       Divider(),
-                      DataText(dataText: "5"),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      TitleText(title: "تاريخ"),
-                      Divider(),
-                      DataText(dataText: "20 اغسطس 12:34"),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      TitleText(title: "الاذن"),
-                      Divider(),
-                      DataText(dataText: "5"),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      TitleText(title: "الاشتراك"),
-                      Divider(),
-                      DataText(dataText: "الاشتراك"),
+                      DataText(dataText: "1200"),
                     ],
                   ),
                 ],
@@ -100,30 +79,14 @@ class DataPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: appHight(context, 0.10)),
-            const TextFieldWidget(),
-            SizedBox(height: appHight(context, 0.12)),
-            Expanded(
-              flex: 1,
-              child: SizedBox(
-                width: appWidth(context, 0.60),
-                child: SizedBox(
-                  height: 60,
-                  child: GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 8.0,
-                      mainAxisSpacing: 8.0,
-                      childAspectRatio: 4.0,
-                    ),
-                    itemCount: 6,
-                    itemBuilder: (context, index) {
-                      return ListViewBody(
-                        title: "${index * 5}",
-                      );
-                    },
-                  ),
-                ),
+            Padding(
+              padding:
+                  EdgeInsets.symmetric(horizontal: appHight(context, 0.50)),
+              child: TextFieldWidget(
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
+                  FilteringTextInputFormatter.deny(RegExp(r'\s')),
+                ],
               ),
             ),
           ],
