@@ -53,6 +53,7 @@ class TextFieldWidget extends StatelessWidget {
       focusNode: focusNode,
       style: const TextStyle(fontSize: 22),
       onChanged: onChanged,
+      textAlign: TextAlign.center,
       obscureText: obscureText ?? false,
       maxLength: maxLength,
       maxLines: maxLines ?? 1,
@@ -63,9 +64,9 @@ class TextFieldWidget extends StatelessWidget {
       decoration: InputDecoration(
         labelText: label,
         labelStyle: const TextStyle(
-          fontSize: 14,
+          fontSize: 16,
           fontWeight: FontWeight.w400,
-          color: Colors.black,
+          color: Colors.grey,
         ),
         counterText: counterText,
         errorBorder: OutlineInputBorder(
