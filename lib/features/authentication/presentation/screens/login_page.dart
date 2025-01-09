@@ -1,25 +1,32 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:iscad/core/colors/app_colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:iscad/core/common/buttons.dart';
 import 'package:iscad/core/common/textfield.dart';
 import 'package:iscad/features/home/presentation/screens/home_page.dart';
+import 'package:iscad/login_cuibt/login_cubit.dart';
 
-class LoginPage extends StatefulWidget {
+
+class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => LoginCubit(),
+      child: _LoginPageView(),
+    );
+  }
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageView extends StatefulWidget {
+  @override
+  State<_LoginPageView> createState() => _LoginPageViewState();
+}
+
+class _LoginPageViewState extends State<_LoginPageView> {
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
-
-  bool isObscuretext = true;
-  bool _isButtonEnabled = false;
-  final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -31,40 +38,61 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: Row(
-          children: [
-            Expanded(
-              flex: 2,
-              child: Container(
-                height: double.infinity,
-                decoration: const BoxDecoration(
-                  color: Colors.black,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      "assets/images/budget.png",
-                      color: Colors.white,
-                      scale: 4,
-                    ),
-                    const SizedBox(height: 12),
-                    const Text(
-                      "Welcome to Isecad",
-                      style: TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
+      backgroundColor: Colors.white,
+      body: BlocConsumer<LoginCubit, LoginState>(
+        listener: (context, state) {
+          if (state is LoginSuccess) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const HomePage(),
+              ),
+            );
+          } else if (state is LoginError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.message)),
+            );
+          }
+        },
+        builder: (context, state) {
+          final cubit = context.read<LoginCubit>();
+
+          bool isObscure =
+              state is LoginPasswordVisibilityChanged ? state.isObscure : true;
+
+          return Row(
+            children: [
+              Expanded(
+                flex: 2,
+                child: Container(
+                  height: double.infinity,
+                  decoration: const BoxDecoration(
+                    color: Colors.black,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        "assets/images/budget.png",
                         color: Colors.white,
+                        scale: 4,
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 12),
+                      const Text(
+                        "Welcome to Isecad",
+                        style: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              child: Container(
+              Expanded(
+                child: Container(
                   height: double.infinity,
                   decoration: const BoxDecoration(
                     color: Colors.white,
@@ -72,84 +100,54 @@ class _LoginPageState extends State<LoginPage> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 22),
                     child: Form(
-                      key: _formKey,
-                      onChanged: _isEnabled,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           TextFieldWidget(
-                            inputFormatters: [
-                              FilteringTextInputFormatter.deny(RegExp(r'\s')),
-                            ],
                             keyboardType: TextInputType.emailAddress,
-                            validator: (value) =>
-                                EmailValidator.validate(value!)
-                                    ? null
-                                    : "Please enter a valid email",
+                            validator: (value) => EmailValidator.validate(value!)
+                                ? null
+                                : "Please enter a valid email",
                             mycontroller: _email,
-                            hintText: "Email Address ",
+                            hintText: "Email Address",
                             obscureText: false,
                           ),
                           const SizedBox(height: 16),
                           TextFieldWidget(
-                            inputFormatters: [
-                              FilteringTextInputFormatter.deny(RegExp(r'\s')),
-                            ],
                             mycontroller: _password,
                             suffixIcon: GestureDetector(
                               onTap: () {
-                                setState(() {
-                                  isObscuretext = !isObscuretext;
-                                });
+                                cubit.togglePasswordVisibility(isObscure);
                               },
                               child: Icon(
                                 size: 20,
-                                isObscuretext
+                                isObscure
                                     ? Icons.visibility_off
                                     : Icons.visibility,
                               ),
                             ),
                             hintText: "Password",
-                            obscureText: isObscuretext,
+                            obscureText: isObscure,
                           ),
                           const SizedBox(height: 35),
                           ColoredButtonWidget(
-                            buttonColor: !_isButtonEnabled
-                                ? AppColors.darkGrey
-                                : Colors.black,
-                            onPressed: _isButtonEnabled
-                                ? () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const HomePage(),
-                                        ));
-                                    // if (_formKey.currentState!.validate()) {
-                                    //   // add Logic Here
-                                    // }
-                                  }
-                                : null,
+                            buttonColor: Colors.black,
+                            onPressed: () {
+                              cubit.login(_email.text, _password.text);
+                            },
                             text: "Login",
                             textColor: Colors.white,
                           ),
                         ],
                       ),
                     ),
-                  )),
-            ),
-          ],
-        ));
-  }
-
-  void _isEnabled() {
-    if (_email.text.isNotEmpty && _password.text.isNotEmpty) {
-      _isButtonEnabled = true;
-      setState(() {});
-    } else {
-      _isButtonEnabled = false;
-      setState(() {});
-    }
-    setState(() {});
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
   }
 }
