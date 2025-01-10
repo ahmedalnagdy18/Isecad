@@ -6,7 +6,6 @@ import 'package:iscad/core/common/textfield.dart';
 import 'package:iscad/features/home/presentation/screens/home_page.dart';
 import 'package:iscad/login_cuibt/login_cubit.dart';
 
-
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
@@ -105,9 +104,10 @@ class _LoginPageViewState extends State<_LoginPageView> {
                         children: [
                           TextFieldWidget(
                             keyboardType: TextInputType.emailAddress,
-                            validator: (value) => EmailValidator.validate(value!)
-                                ? null
-                                : "Please enter a valid email",
+                            validator: (value) =>
+                                EmailValidator.validate(value!)
+                                    ? null
+                                    : "Please enter a valid email",
                             mycontroller: _email,
                             hintText: "Email Address",
                             obscureText: false,
@@ -131,10 +131,22 @@ class _LoginPageViewState extends State<_LoginPageView> {
                           ),
                           const SizedBox(height: 35),
                           ColoredButtonWidget(
-                            buttonColor: Colors.black,
-                            onPressed: () {
-                              cubit.login(_email.text, _password.text);
-                            },
+                            buttonColor: !_isButtonEnabled
+                                ? AppColors.darkGrey
+                                : Colors.black,
+                            onPressed: _isButtonEnabled
+                                ? () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const HomePage(),
+                                        ));
+                                    // if (_formKey.currentState!.validate()) {
+                                    //   // add Logic Here
+                                    // }
+                                  }
+                                : null,
                             text: "Login",
                             textColor: Colors.white,
                           ),
