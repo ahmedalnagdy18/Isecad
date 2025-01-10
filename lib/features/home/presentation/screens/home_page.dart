@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:iscad/core/extentions/app_extentions.dart';
-import 'package:iscad/features/home/presentation/screens/add_item.dart';
 import 'package:iscad/features/home/presentation/screens/data_page.dart';
 import 'package:iscad/features/home/presentation/widgets/list_view_body.dart';
 
@@ -30,20 +29,13 @@ class HomePage extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () {
-                          if (index == 0) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const DataPage(),
-                                ));
-                          }
-                          if (index == 1) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const AddItemPage(),
-                                ));
-                          }
+                          index == 0
+                              ? Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const DataPage(),
+                                  ))
+                              : const SizedBox();
                         },
                         child: ListViewBody(
                           title: titles1[index],
