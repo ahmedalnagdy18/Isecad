@@ -29,3 +29,7 @@ class ProductError extends ProductState {
   final String message;
   ProductError(this.message);
 }
+class ProductUpdated extends ProductState {
+  final Product product;
+  ProductUpdated(this.product);
+}

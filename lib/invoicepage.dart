@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:iscad/crud_cuibt/crud_cuibt.dart';
 import 'package:iscad/printing.dart';
 
 class InvoicePage extends StatefulWidget {
+  final String productId;
   final String productName;
   final int quantity;
   final double price;
 
   const InvoicePage({
     super.key,
+    required this.productId,
     required this.productName,
     required this.quantity,
     required this.price,
@@ -22,7 +26,6 @@ class _InvoicePageState extends State<InvoicePage> {
   int? selectedQuantity;
   double total = 0.0;
 
-  // NumberFormat instance without decimals.
   final NumberFormat currencyFormatter =
       NumberFormat.currency(locale: 'en_US', symbol: '\$', decimalDigits: 0);
 
@@ -84,16 +87,12 @@ class _InvoicePageState extends State<InvoicePage> {
                 color: Colors.green,
               ),
             ),
-            // const Spacer(),
             const SizedBox(height: 50),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.all(Colors.black),
-                  ),
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -104,11 +103,17 @@ class _InvoicePageState extends State<InvoicePage> {
                 ),
                 const SizedBox(width: 14),
                 ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.all(Colors.black),
-                  ),
                   onPressed: selectedQuantity != null
                       ? () {
+                          final remainingQuantity =
+                              widget.quantity - (selectedQuantity ?? 0);
+
+                          // Use the Cubit to update the product quantity
+                          context
+                              .read<ProductCubit>()
+                              .updateProductQuantity(
+                                  widget.productId, remainingQuantity);
+
                           Navigator.push(
                             context,
                             MaterialPageRoute(

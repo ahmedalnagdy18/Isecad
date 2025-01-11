@@ -76,6 +76,27 @@ class ProductCubit extends Cubit<ProductState> {
     emit(ProductError("Failed to search products: ${e.toString()}"));
   }
 }
-
+  void updateProductQuantity(String productId, int newQuantity) {
+    try {
+      final product = _productBox.get(productId);
+      if (product != null) {
+        final updatedProduct = Product(
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          quantity: newQuantity,
+        );
+        _productBox.put(productId, updatedProduct);
+        emit(ProductUpdated(updatedProduct));
+      } else {
+        emit(ProductError("Product not found!"));
+      }
+    } catch (e) {
+      emit(ProductError("Failed to update product: ${e.toString()}"));
+    }
+  }
 }
+
+
+
 

@@ -62,6 +62,7 @@ class ProductDetailsPage extends StatelessWidget {
                           productName: product.name,
                           quantity: enteredQuantity,
                           price: product.price,
+                          productId: product.id,
                         ),
                       ),
                     );

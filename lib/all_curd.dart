@@ -278,6 +278,7 @@ class _AllProductsView extends StatelessWidget {
                                 price: product.price,
                                 productName: product.name,
                                 quantity: product.quantity,
+                                productId: product.id,
                               ),
                               settings: RouteSettings(arguments: [
                                 product.name,
