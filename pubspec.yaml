@@ -32,7 +32,10 @@ dependencies:
   email_validator: ^3.0.0
   flutter_bloc: ^8.0.0
   hive: ^2.0.0
-  hive_flutter: ^1.1.0  
+  hive_flutter: ^1.1.0
+  font_awesome_flutter: ^10.5.0
+  intl: ^0.19.0
+  printing: ^5.11.0    
   flutter:
     sdk: flutter
 
@@ -62,6 +65,9 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - lib/assests/NotoSansArabic-Light.ttf
+    - lib/assests/EBGaramond-Bold.ttf
+    - lib/assests/alfont_com_arial-1.ttf    
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
