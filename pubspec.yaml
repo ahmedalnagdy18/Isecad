@@ -30,12 +30,6 @@ environment:
 dependencies:
   cupertino_icons: ^1.0.8
   email_validator: ^3.0.0
-  flutter_bloc: ^8.0.0
-  hive: ^2.0.0
-  hive_flutter: ^1.1.0
-  font_awesome_flutter: ^10.5.0
-  intl: ^0.19.0
-  printing: ^5.11.0    
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.0

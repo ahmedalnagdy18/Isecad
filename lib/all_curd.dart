@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iscad/crud_cuibt/crud_cuibt.dart';
 import 'package:iscad/crud_cuibt/crud_state.dart';
-import 'package:iscad/printing.dart';
+import 'package:iscad/invoicepage.dart';
 
 import 'product_model.dart';
 
@@ -15,9 +15,7 @@ class AllProductsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ProductCubit()..fetchProducts(),
-
       child: const _AllProductsView(),
-
     );
   }
 }
@@ -43,11 +41,9 @@ class _AllProductsView extends StatelessWidget {
                 TextField(
                   controller: idController,
                   decoration: const InputDecoration(labelText: "Product ID"),
-
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
                   ],
-
                 ),
                 const SizedBox(height: 8),
                 TextField(
@@ -63,19 +59,16 @@ class _AllProductsView extends StatelessWidget {
                     FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
                     FilteringTextInputFormatter.deny(RegExp(r'\s')),
                   ],
-
                 ),
                 const SizedBox(height: 8),
                 TextField(
                   controller: quantityController,
                   keyboardType: TextInputType.number,
-
                   decoration:
                       const InputDecoration(labelText: "Product Quantity"),
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
                   ],
-
                 ),
               ],
             ),
@@ -92,7 +85,6 @@ class _AllProductsView extends StatelessWidget {
                 final price = double.tryParse(priceController.text);
                 final quantity = int.tryParse(quantityController.text);
 
-
                 if (id.isEmpty ||
                     name.isEmpty ||
                     price == null ||
@@ -100,7 +92,6 @@ class _AllProductsView extends StatelessWidget {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                         content: Text("Please fill all fields correctly!")),
-
                   );
                   return;
                 }
@@ -150,24 +141,20 @@ class _AllProductsView extends StatelessWidget {
                   controller: priceController,
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(labelText: "Product Price"),
-
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
                     FilteringTextInputFormatter.deny(RegExp(r'\s')),
                   ],
-
                 ),
                 const SizedBox(height: 8),
                 TextField(
                   controller: quantityController,
                   keyboardType: TextInputType.number,
-
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
                   ],
                   decoration:
                       const InputDecoration(labelText: "Product Quantity"),
-
                 ),
               ],
             ),
@@ -185,10 +172,8 @@ class _AllProductsView extends StatelessWidget {
 
                 if (name.isEmpty || price == null || quantity == null) {
                   ScaffoldMessenger.of(context).showSnackBar(
-
                     const SnackBar(
                         content: Text("Please fill all fields correctly!")),
-
                   );
                   return;
                 }
@@ -249,7 +234,6 @@ class _AllProductsView extends StatelessWidget {
               listener: (context, state) {
                 if (state is ProductAddedSuccess) {
                   ScaffoldMessenger.of(context).showSnackBar(
-
                     SnackBar(
                         content: Text("Product added: ${state.product.name}")),
                   );
@@ -263,7 +247,6 @@ class _AllProductsView extends StatelessWidget {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                         content: Text("Product deleted successfully.")),
-
                   );
                 } else if (state is ProductError) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -291,7 +274,11 @@ class _AllProductsView extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Printing(products: product),
+                              builder: (context) => InvoicePage(
+                                price: product.price,
+                                productName: product.name,
+                                quantity: product.quantity,
+                              ),
                               settings: RouteSettings(arguments: [
                                 product.name,
                                 product.price.toString(),
@@ -325,7 +312,6 @@ class _AllProductsView extends StatelessWidget {
                               ),
                             ],
                           ),
-
                         ),
                       );
                     },

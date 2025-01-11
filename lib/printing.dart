@@ -5,9 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
-import 'package:iscad/product_model.dart';
-
-
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart' as zm;
@@ -15,10 +12,14 @@ import 'package:printing/printing.dart';
 
 class Printing extends StatefulWidget {
   static const name = 'print';
-
-  final Product products;
-  const Printing({super.key, required this.products});
-
+  final String productName;
+  final int quantity;
+  final double price;
+  const Printing(
+      {super.key,
+      required this.productName,
+      required this.quantity,
+      required this.price});
 
   @override
   State<Printing> createState() => _PrintingState();
@@ -35,7 +36,6 @@ class _PrintingState extends State<Printing> {
 
   @override
   Widget build(BuildContext context) {
-
     final arguments =
         ModalRoute.of(context)?.settings.arguments as List<dynamic>?;
 
@@ -48,6 +48,7 @@ class _PrintingState extends State<Printing> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.white,
           title: Row(
             children: [
               RawKeyboardListener(
@@ -69,7 +70,6 @@ class _PrintingState extends State<Printing> {
                   Navigator.of(context).popUntil((_) => count++ >= 1);
                 },
               ),
-              Text(A!)
             ],
           ),
         ),
@@ -89,6 +89,7 @@ class _PrintingState extends State<Printing> {
         await rootBundle.load("lib/assests/alfont_com_arial-1.ttf");
     final ttf = pw.Font.ttf(fontData);
     final font = pw.Font.ttf(fontData);
+    final NumberFormat currencyFormatter = NumberFormat("#,##0", "en_US");
 
     pdf.addPage(
       pw.Page(
@@ -102,52 +103,52 @@ class _PrintingState extends State<Printing> {
                 children: [
                   pw.Column(
                     children: [
-                      pw.Text(
-                        E,
-                        style: pw.TextStyle(font: font, fontSize: 25),
-                        textDirection: pw.TextDirection.rtl,
-                      ),
-                      pw.Text(
-                        'مخبز السيد طه',
-                        style: pw.TextStyle(font: font, fontSize: 25),
-                        textDirection: pw.TextDirection.rtl,
-                      ),
                       pw.Row(
                           mainAxisAlignment: pw.MainAxisAlignment.center,
                           children: [
-                            pw.Text(A,
+                            pw.Text(widget.productName,
                                 style: pw.TextStyle(font: ttf, fontSize: 15),
                                 textDirection: pw.TextDirection.rtl),
+                            pw.SizedBox(width: 6),
                             pw.Text(
                               'الاسم:',
                               style: pw.TextStyle(font: font, fontSize: 15),
                               textDirection: pw.TextDirection.rtl,
                             ),
                           ]),
+                      pw.SizedBox(height: 6),
                       pw.Row(
                           mainAxisAlignment: pw.MainAxisAlignment.center,
                           children: [
-                            pw.Text('$B رغيف',
+                            pw.Text('${widget.quantity}',
                                 style: pw.TextStyle(font: font, fontSize: 20),
                                 textDirection: pw.TextDirection.rtl),
+                            pw.SizedBox(width: 6),
                             pw.Text(
                               'العدد:',
                               style: pw.TextStyle(font: font, fontSize: 15),
                               textDirection: pw.TextDirection.rtl,
                             ),
                           ]),
+                      pw.SizedBox(height: 6),
                       pw.Row(
                           mainAxisAlignment: pw.MainAxisAlignment.center,
                           children: [
-                            pw.Text('$D رغيف',
-                                style: pw.TextStyle(font: font, fontSize: 10),
-                                textDirection: pw.TextDirection.rtl),
-                            pw.Text(' المتبقي: ',
-                                style: pw.TextStyle(font: font, fontSize: 15),
-                                textDirection: pw.TextDirection.rtl),
+                            pw.Text(
+                              '${currencyFormatter.format(widget.price)}',
+                              style: pw.TextStyle(font: font, fontSize: 20),
+                              textDirection: pw.TextDirection.rtl,
+                            ),
+                            pw.SizedBox(width: 6),
+                            pw.Text(
+                              'السعر:',
+                              style: pw.TextStyle(font: font, fontSize: 15),
+                              textDirection: pw.TextDirection.rtl,
+                            ),
                           ])
                     ],
                   ),
+                  pw.SizedBox(height: 22),
                   pw.Column(
                     mainAxisAlignment: pw.MainAxisAlignment.start,
                     children: [
