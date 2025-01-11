@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:iscad/all_curd.dart';
 import 'package:iscad/crud_cuibt/crud_cuibt.dart';
+import 'package:iscad/features/authentication/presentation/screens/login_page.dart';
 import 'package:iscad/product_model.dart';
 
-void main()async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   await Hive.openBox('userBox');
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const AllProductsPage(),
+        home: const LoginPage(),
       ),
     );
   }

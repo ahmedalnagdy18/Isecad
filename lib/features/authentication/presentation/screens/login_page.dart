@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:iscad/all_curd.dart';
 import 'package:iscad/core/common/buttons.dart';
 import 'package:iscad/core/common/textfield.dart';
-import 'package:iscad/features/home/presentation/screens/home_page.dart';
 import 'package:iscad/login_cuibt/login_cubit.dart';
-
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -17,14 +16,12 @@ class LoginPage extends StatelessWidget {
       child: _LoginPageView(),
     );
   }
-
 }
 
 class _LoginPageView extends StatefulWidget {
   @override
   State<_LoginPageView> createState() => _LoginPageViewState();
 }
-
 
 class _LoginPageViewState extends State<_LoginPageView> {
   final TextEditingController _email = TextEditingController();
@@ -47,7 +44,7 @@ class _LoginPageViewState extends State<_LoginPageView> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const HomePage(),
+                builder: (context) => const AllProductsPage(),
               ),
             );
           } else if (state is LoginError) {
@@ -107,9 +104,10 @@ class _LoginPageViewState extends State<_LoginPageView> {
                         children: [
                           TextFieldWidget(
                             keyboardType: TextInputType.emailAddress,
-                            validator: (value) => EmailValidator.validate(value!)
-                                ? null
-                                : "Please enter a valid email",
+                            validator: (value) =>
+                                EmailValidator.validate(value!)
+                                    ? null
+                                    : "Please enter a valid email",
                             mycontroller: _email,
                             hintText: "Email Address",
                             obscureText: false,
@@ -133,12 +131,10 @@ class _LoginPageViewState extends State<_LoginPageView> {
                           ),
                           const SizedBox(height: 35),
                           ColoredButtonWidget(
-
                             buttonColor: Colors.black,
                             onPressed: () {
                               cubit.login(_email.text, _password.text);
                             },
-
                             text: "Login",
                             textColor: Colors.white,
                           ),

@@ -107,18 +107,20 @@ class _InvoicePageState extends State<InvoicePage> {
                   style: ButtonStyle(
                     backgroundColor: WidgetStateProperty.all(Colors.black),
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Printing(
-                          price: total,
-                          productName: widget.productName,
-                          quantity: selectedQuantity ?? 1,
-                        ),
-                      ),
-                    );
-                  },
+                  onPressed: selectedQuantity != null
+                      ? () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Printing(
+                                price: total,
+                                productName: widget.productName,
+                                quantity: selectedQuantity ?? 1,
+                              ),
+                            ),
+                          );
+                        }
+                      : null,
                   child: const Text(
                     "Save",
                     style: TextStyle(color: Colors.white),
