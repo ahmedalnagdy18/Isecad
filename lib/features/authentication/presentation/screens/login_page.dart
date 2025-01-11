@@ -17,12 +17,14 @@ class LoginPage extends StatelessWidget {
       child: _LoginPageView(),
     );
   }
+
 }
 
 class _LoginPageView extends StatefulWidget {
   @override
   State<_LoginPageView> createState() => _LoginPageViewState();
 }
+
 
 class _LoginPageViewState extends State<_LoginPageView> {
   final TextEditingController _email = TextEditingController();
@@ -131,10 +133,12 @@ class _LoginPageViewState extends State<_LoginPageView> {
                           ),
                           const SizedBox(height: 35),
                           ColoredButtonWidget(
+
                             buttonColor: Colors.black,
                             onPressed: () {
                               cubit.login(_email.text, _password.text);
                             },
+
                             text: "Login",
                             textColor: Colors.white,
                           ),
