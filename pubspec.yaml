@@ -30,10 +30,18 @@ environment:
 dependencies:
   cupertino_icons: ^1.0.8
   email_validator: ^3.0.0
+  flutter_bloc: ^8.0.0
+  hive: ^2.0.0
+  hive_flutter: ^1.1.0
+  font_awesome_flutter: ^10.5.0
+  intl: ^0.19.0
+  printing: ^5.11.0    
   flutter:
     sdk: flutter
 
 dev_dependencies:
+  hive_generator: ^1.1.0
+  build_runner: ^2.0.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -57,6 +65,9 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - lib/assests/NotoSansArabic-Light.ttf
+    - lib/assests/EBGaramond-Bold.ttf
+    - lib/assests/alfont_com_arial-1.ttf    
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
