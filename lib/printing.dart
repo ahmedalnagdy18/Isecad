@@ -5,6 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
+import 'package:iscad/product_model.dart';
+
+
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart' as zm;
@@ -12,7 +15,10 @@ import 'package:printing/printing.dart';
 
 class Printing extends StatefulWidget {
   static const name = 'print';
-  const Printing({super.key});
+
+  final Product products;
+  const Printing({super.key, required this.products});
+
 
   @override
   State<Printing> createState() => _PrintingState();
@@ -29,13 +35,16 @@ class _PrintingState extends State<Printing> {
 
   @override
   Widget build(BuildContext context) {
-    List hh = ModalRoute.of(context)!.settings.arguments as List;
 
-    A = hh[0];
-    B = hh[3].toString();
-    C = hh[1].toString();
-    D = hh[2].toString();
-    E = hh[4].toString();
+    final arguments =
+        ModalRoute.of(context)?.settings.arguments as List<dynamic>?;
+
+    A = arguments?[0] ?? "Unknown";
+    B = arguments?[1]?.toString() ?? "0";
+    C = arguments?[2]?.toString() ?? "0";
+    D = arguments?[3]?.toString() ?? "Unknown";
+    E = "Some default value";
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(

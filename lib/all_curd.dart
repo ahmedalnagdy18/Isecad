@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iscad/crud_cuibt/crud_cuibt.dart';
 import 'package:iscad/crud_cuibt/crud_state.dart';
+import 'package:iscad/printing.dart';
+
 import 'product_model.dart';
 
 class AllProductsPage extends StatelessWidget {
@@ -11,7 +15,9 @@ class AllProductsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ProductCubit()..fetchProducts(),
-      child: _AllProductsView(),
+
+      child: const _AllProductsView(),
+
     );
   }
 }
@@ -37,6 +43,11 @@ class _AllProductsView extends StatelessWidget {
                 TextField(
                   controller: idController,
                   decoration: const InputDecoration(labelText: "Product ID"),
+
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
+
                 ),
                 const SizedBox(height: 8),
                 TextField(
@@ -48,12 +59,23 @@ class _AllProductsView extends StatelessWidget {
                   controller: priceController,
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(labelText: "Product Price"),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
+                    FilteringTextInputFormatter.deny(RegExp(r'\s')),
+                  ],
+
                 ),
                 const SizedBox(height: 8),
                 TextField(
                   controller: quantityController,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(labelText: "Product Quantity"),
+
+                  decoration:
+                      const InputDecoration(labelText: "Product Quantity"),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
+
                 ),
               ],
             ),
@@ -70,9 +92,15 @@ class _AllProductsView extends StatelessWidget {
                 final price = double.tryParse(priceController.text);
                 final quantity = int.tryParse(quantityController.text);
 
-                if (id.isEmpty || name.isEmpty || price == null || quantity == null) {
+
+                if (id.isEmpty ||
+                    name.isEmpty ||
+                    price == null ||
+                    quantity == null) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Please fill all fields correctly!")),
+                    const SnackBar(
+                        content: Text("Please fill all fields correctly!")),
+
                   );
                   return;
                 }
@@ -97,7 +125,10 @@ class _AllProductsView extends StatelessWidget {
 
   void _showEditProductDialog(BuildContext context, Product product) {
     final nameController = TextEditingController(text: product.name);
-    final priceController = TextEditingController(text: product.price.toString());
+
+    final priceController =
+        TextEditingController(text: product.price.toString());
+
     final quantityController =
         TextEditingController(text: product.quantity.toString());
 
@@ -119,12 +150,24 @@ class _AllProductsView extends StatelessWidget {
                   controller: priceController,
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(labelText: "Product Price"),
+
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
+                    FilteringTextInputFormatter.deny(RegExp(r'\s')),
+                  ],
+
                 ),
                 const SizedBox(height: 8),
                 TextField(
                   controller: quantityController,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(labelText: "Product Quantity"),
+
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
+                  decoration:
+                      const InputDecoration(labelText: "Product Quantity"),
+
                 ),
               ],
             ),
@@ -142,7 +185,10 @@ class _AllProductsView extends StatelessWidget {
 
                 if (name.isEmpty || price == null || quantity == null) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Please fill all fields correctly!")),
+
+                    const SnackBar(
+                        content: Text("Please fill all fields correctly!")),
+
                   );
                   return;
                 }
@@ -203,15 +249,21 @@ class _AllProductsView extends StatelessWidget {
               listener: (context, state) {
                 if (state is ProductAddedSuccess) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("Product added: ${state.product.name}")),
+
+                    SnackBar(
+                        content: Text("Product added: ${state.product.name}")),
                   );
                 } else if (state is ProductUpdatedSuccess) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("Product updated: ${state.product.name}")),
+                    SnackBar(
+                        content:
+                            Text("Product updated: ${state.product.name}")),
                   );
                 } else if (state is ProductDeletedSuccess) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Product deleted successfully.")),
+                    const SnackBar(
+                        content: Text("Product deleted successfully.")),
+
                   );
                 } else if (state is ProductError) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -233,26 +285,47 @@ class _AllProductsView extends StatelessWidget {
                     itemCount: products.length,
                     itemBuilder: (context, index) {
                       final product = products[index];
-                      return ListTile(
-                        title: Text(product.name),
-                        subtitle: Text(
-                            "Price: \$${product.price.toStringAsFixed(2)} | Quantity: ${product.quantity}"),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                              icon: const Icon(Icons.edit),
-                              onPressed: () {
-                                _showEditProductDialog(context, product);
-                              },
+
+                      return InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Printing(products: product),
+                              settings: RouteSettings(arguments: [
+                                product.name,
+                                product.price.toString(),
+                                product.quantity.toString(),
+                                product.id
+                              ]),
                             ),
-                            IconButton(
-                              icon: const Icon(Icons.delete),
-                              onPressed: () {
-                                context.read<ProductCubit>().deleteProduct(product.id);
-                              },
-                            ),
-                          ],
+                          );
+                          //   print("===== ${products[index].name}");
+                        },
+                        child: ListTile(
+                          title: Text(product.name),
+                          subtitle: Text(
+                              "Price: \$${product.price.toStringAsFixed(2)} | Quantity: ${product.quantity}"),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.edit),
+                                onPressed: () {
+                                  _showEditProductDialog(context, product);
+                                },
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.delete),
+                                onPressed: () {
+                                  context
+                                      .read<ProductCubit>()
+                                      .deleteProduct(product.id);
+                                },
+                              ),
+                            ],
+                          ),
+
                         ),
                       );
                     },
