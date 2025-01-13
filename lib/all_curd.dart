@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iscad/core/observer/observer.dart';
 import 'package:iscad/crud_cuibt/crud_cuibt.dart';
 import 'package:iscad/crud_cuibt/crud_state.dart';
 import 'package:iscad/invoicepage.dart';
@@ -20,9 +21,14 @@ class AllProductsPage extends StatelessWidget {
   }
 }
 
-class _AllProductsView extends StatelessWidget {
+class _AllProductsView extends StatefulWidget {
   const _AllProductsView();
 
+  @override
+  State<_AllProductsView> createState() => _AllProductsViewState();
+}
+
+class _AllProductsViewState extends State<_AllProductsView> {
   void _showAddProductDialog(BuildContext context) {
     final idController = TextEditingController();
     final nameController = TextEditingController();
@@ -196,16 +202,47 @@ class _AllProductsView extends StatelessWidget {
     );
   }
 
+  late PostObserver postObserver;
+  bool? isLongpress;
+  int? newQuantity;
+  final Set<String> selectedProductIds = {}; // Store selected product IDs
+  @override
+  void initState() {
+    super.initState();
+
+    postObserver = PostObserver(
+      updatequntity: (updatedQuantity) {
+        setState(() {
+          context
+              .read<ProductCubit>()
+              .modiyOfNewData(newQuantity: updatedQuantity);
+          newQuantity = updatedQuantity;
+        });
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final searchController = TextEditingController();
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("All Products"),
+        backgroundColor: Colors.black,
+        title: const Text(
+          "All Products",
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        iconTheme: const IconThemeData(color: Colors.white),
         actions: [
           IconButton(
-            icon: const Icon(Icons.add),
+            icon: const Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
             onPressed: () {
               _showAddProductDialog(context);
             },
@@ -264,58 +301,145 @@ class _AllProductsView extends StatelessWidget {
                     );
                   }
 
-                  return ListView.builder(
-                    itemCount: products.length,
-                    itemBuilder: (context, index) {
-                      final product = products[index];
+                  return Column(
+                    children: [
+                      isLongpress == true
+                          ? Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  InkWell(
+                                      onTap: () {
+                                        isLongpress = false;
+                                        selectedProductIds.clear();
+                                        setState(() {});
+                                      },
+                                      child: const Text("cancel")),
+                                  InkWell(
+                                      onTap: () {
+                                        if (selectedProductIds.isNotEmpty) {
+                                          final selectedProducts = products
+                                              .where((product) =>
+                                                  selectedProductIds
+                                                      .contains(product.id))
+                                              .toList();
 
-                      return InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => InvoicePage(
-                                price: product.price,
-                                productName: product.name,
-                                quantity: product.quantity,
-                                productId: product.id,
+                                          for (final product
+                                              in selectedProducts) {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    InvoicePage(
+                                                  price: product.price,
+                                                  productName: product.name,
+                                                  quantity: newQuantity ??
+                                                      product.quantity,
+                                                  productId: product.id,
+                                                ),
+                                                settings:
+                                                    RouteSettings(arguments: [
+                                                  product.name,
+                                                  product.price.toString(),
+                                                  product.quantity.toString(),
+                                                  product.id,
+                                                ]),
+                                              ),
+                                            );
+                                          }
+                                        }
+                                      },
+                                      child: const Text("Next")),
+                                ],
                               ),
-                              settings: RouteSettings(arguments: [
-                                product.name,
-                                product.price.toString(),
-                                product.quantity.toString(),
-                                product.id
-                              ]),
-                            ),
-                          );
-                          //   print("===== ${products[index].name}");
-                        },
-                        child: ListTile(
-                          title: Text(product.name),
-                          subtitle: Text(
-                              "Price: \$${product.price.toStringAsFixed(2)} | Quantity: ${product.quantity}"),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              IconButton(
-                                icon: const Icon(Icons.edit),
-                                onPressed: () {
-                                  _showEditProductDialog(context, product);
-                                },
+                            )
+                          : const SizedBox(),
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: products.length,
+                          itemBuilder: (context, index) {
+                            final product = products[index];
+                            final bool isSelected =
+                                selectedProductIds.contains(product.id);
+                            return InkWell(
+                              onLongPress: () {
+                                isLongpress = true;
+                                setState(() {});
+                              },
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => InvoicePage(
+                                      price: product.price,
+                                      productName: product.name,
+                                      quantity: newQuantity ?? product.quantity,
+                                      productId: product.id,
+                                    ),
+                                    settings: RouteSettings(arguments: [
+                                      product.name,
+                                      product.price.toString(),
+                                      product.quantity.toString(),
+                                      product.id
+                                    ]),
+                                  ),
+                                );
+                                //   print("===== ${products[index].name}");
+                              },
+                              child: Row(
+                                children: [
+                                  isLongpress == true
+                                      ? Checkbox(
+                                          value: isSelected,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              if (value == true) {
+                                                selectedProductIds
+                                                    .add(product.id);
+                                              } else {
+                                                selectedProductIds
+                                                    .remove(product.id);
+                                              }
+                                            });
+                                          },
+                                        )
+                                      : const SizedBox(),
+                                  Expanded(
+                                    child: ListTile(
+                                      title: Text(product.name),
+                                      subtitle: Text(
+                                          "Price: \$${product.price.toStringAsFixed(2)} | Quantity: ${newQuantity ?? product.quantity}"),
+                                      trailing: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          IconButton(
+                                            icon: const Icon(Icons.edit),
+                                            onPressed: () {
+                                              _showEditProductDialog(
+                                                  context, product);
+                                            },
+                                          ),
+                                          IconButton(
+                                            icon: const Icon(Icons.delete),
+                                            onPressed: () {
+                                              context
+                                                  .read<ProductCubit>()
+                                                  .deleteProduct(product.id);
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              IconButton(
-                                icon: const Icon(Icons.delete),
-                                onPressed: () {
-                                  context
-                                      .read<ProductCubit>()
-                                      .deleteProduct(product.id);
-                                },
-                              ),
-                            ],
-                          ),
+                            );
+                          },
                         ),
-                      );
-                    },
+                      ),
+                    ],
                   );
                 }
 

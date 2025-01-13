@@ -135,7 +135,7 @@ class _PrintingState extends State<Printing> {
                           mainAxisAlignment: pw.MainAxisAlignment.center,
                           children: [
                             pw.Text(
-                              '${currencyFormatter.format(widget.price)}',
+                              currencyFormatter.format(widget.price),
                               style: pw.TextStyle(font: font, fontSize: 20),
                               textDirection: pw.TextDirection.rtl,
                             ),

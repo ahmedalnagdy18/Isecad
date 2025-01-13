@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:iscad/crud_cuibt/crud_cuibt.dart';
+import 'package:iscad/core/observer/updater.dart';
 import 'package:iscad/printing.dart';
 
 class InvoicePage extends StatefulWidget {
@@ -32,8 +31,14 @@ class _InvoicePageState extends State<InvoicePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Invoice"),
+        iconTheme: const IconThemeData(color: Colors.white),
+        backgroundColor: Colors.black,
+        title: const Text(
+          "Invoice",
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -93,6 +98,8 @@ class _InvoicePageState extends State<InvoicePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
+                  style: const ButtonStyle(
+                      backgroundColor: WidgetStatePropertyAll(Colors.black)),
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -103,18 +110,18 @@ class _InvoicePageState extends State<InvoicePage> {
                 ),
                 const SizedBox(width: 14),
                 ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: WidgetStatePropertyAll(
+                    selectedQuantity != null ? Colors.green : Colors.grey,
+                  )),
                   onPressed: selectedQuantity != null
                       ? () {
                           final remainingQuantity =
                               widget.quantity - (selectedQuantity ?? 0);
 
-                          // Use the Cubit to update the product quantity
-                          context
-                              .read<ProductCubit>()
-                              .updateProductQuantity(
-                                  widget.productId, remainingQuantity);
-
-                          Navigator.push(
+                          PostUpdater.instance
+                              .notifyLikeUpdate(remainingQuantity);
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                               builder: (context) => Printing(

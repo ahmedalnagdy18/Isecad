@@ -33,6 +33,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.0
+  flutter_multi_select_items: ^0.4.3
   font_awesome_flutter: ^10.8.0
   hive: ^2.0.0
   hive_flutter: ^1.1.0
@@ -41,13 +42,6 @@ dependencies:
   printing: ^5.13.4
 
 dev_dependencies:
-
-
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
   flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
@@ -68,7 +62,7 @@ flutter:
     - assets/images/
     - lib/assests/NotoSansArabic-Light.ttf
     - lib/assests/EBGaramond-Bold.ttf
-    - lib/assests/alfont_com_arial-1.ttf    
+    - lib/assests/alfont_com_arial-1.ttf
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
