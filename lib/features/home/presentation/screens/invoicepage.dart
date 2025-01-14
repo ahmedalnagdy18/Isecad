@@ -119,8 +119,8 @@ class _InvoicePageState extends State<InvoicePage> {
                           final remainingQuantity =
                               widget.quantity - (selectedQuantity ?? 0);
 
-                          PostUpdater.instance
-                              .notifyLikeUpdate(remainingQuantity);
+                          PostUpdater.instance.notifyLikeUpdate(
+                              remainingQuantity, widget.productId);
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(

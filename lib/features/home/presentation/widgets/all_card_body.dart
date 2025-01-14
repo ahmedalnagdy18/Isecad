@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iscad/core/observer/observer.dart';
 import 'package:iscad/features/home/domain/product_model.dart';
 import 'package:iscad/features/home/presentation/crud_cuibt/crud_cuibt.dart';
+import 'package:iscad/features/home/presentation/crud_cuibt/crud_state.dart';
 import 'package:iscad/features/home/presentation/screens/invoicepage.dart';
 import 'package:iscad/features/home/presentation/widgets/edit_product_dialog.dart';
 
@@ -26,13 +27,16 @@ class _AllCardBodyState extends State<AllCardBody> {
     super.initState();
 
     postObserver = PostObserver(
-      updatequntity: (updatedQuantity) {
-        setState(() {
-          context
-              .read<ProductCubit>()
-              .modiyOfNewData(newQuantity: updatedQuantity);
-          newQuantity = updatedQuantity;
-        });
+      updatequntity: (updatedQuantity, id) {
+        // Check if the updated product ID exists in the list of products
+        if (widget.products.any((product) => product.id == id)) {
+          setState(() {
+            context
+                .read<ProductCubit>()
+                .modiyOfNewData(newQuantity: updatedQuantity, id: id);
+            newQuantity = updatedQuantity;
+          });
+        }
       },
     );
   }
@@ -59,7 +63,7 @@ class _AllCardBodyState extends State<AllCardBody> {
                           selectedProductIds.clear();
                           setState(() {});
                         },
-                        child: const Text("cancel")),
+                        child: const Text("Cancel")),
                     InkWell(
                         onTap: () {
                           if (selectedProductIds.isNotEmpty) {
@@ -75,7 +79,7 @@ class _AllCardBodyState extends State<AllCardBody> {
                                   builder: (context) => InvoicePage(
                                     price: product.price,
                                     productName: product.name,
-                                    quantity: newQuantity ?? product.quantity,
+                                    quantity: product.quantity,
                                     productId: product.id,
                                   ),
                                   settings: RouteSettings(arguments: [
@@ -112,7 +116,7 @@ class _AllCardBodyState extends State<AllCardBody> {
                       builder: (context) => InvoicePage(
                         price: product.price,
                         productName: product.name,
-                        quantity: newQuantity ?? product.quantity,
+                        quantity: product.quantity,
                         productId: product.id,
                       ),
                       settings: RouteSettings(arguments: [
@@ -123,7 +127,6 @@ class _AllCardBodyState extends State<AllCardBody> {
                       ]),
                     ),
                   );
-                  //   print("===== ${products[index].name}");
                 },
                 child: Row(
                   children: [
@@ -144,8 +147,18 @@ class _AllCardBodyState extends State<AllCardBody> {
                     Expanded(
                       child: ListTile(
                         title: Text(product.name),
-                        subtitle: Text(
-                            "Price: \$${product.price.toStringAsFixed(2)} | Quantity: ${newQuantity ?? product.quantity}"),
+                        subtitle: BlocBuilder<ProductCubit, ProductState>(
+                          builder: (context, state) {
+                            if (state is ProductListLoaded) {
+                              final updatedProduct = state.products
+                                  .firstWhere((p) => p.id == product.id);
+                              return Text(
+                                  "Price: \$${updatedProduct.price.toStringAsFixed(2)} | Quantity: ${updatedProduct.quantity}");
+                            }
+                            return Text(
+                                "Price: \$${product.price.toStringAsFixed(2)} | Quantity: ${product.quantity}");
+                          },
+                        ),
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [

@@ -15,10 +15,10 @@ class PostUpdater {
     _observers.remove(observer);
   }
 
-  void notifyLikeUpdate(int quntity) {
+  void notifyLikeUpdate(int quntity, String id) {
     for (var observer in _observers) {
       if (observer.updatequntity != null) {
-        observer.updatequntity!(quntity);
+        observer.updatequntity!(quntity, id);
       }
     }
   }

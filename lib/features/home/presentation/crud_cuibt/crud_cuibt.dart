@@ -32,17 +32,27 @@ class ProductCubit extends Cubit<ProductState> {
   }
 
   void modiyOfNewData({
-    String? id,
+    required String id,
     String? name,
     double? price,
     int? newQuantity,
   }) {
+    if (state is! ProductListLoaded) {
+      return;
+    }
+
     final currentState = (state as ProductListLoaded).products;
+
+    if (!currentState.any((product) => product.id == id)) {
+      return;
+    }
 
     final updatedState = currentState.map((product) {
       if (product.id == id) {
         return product.modify(
           quantity: newQuantity,
+          name: name ?? product.name,
+          price: price ?? product.price,
         );
       }
       return product;

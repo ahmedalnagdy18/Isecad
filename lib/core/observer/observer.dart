@@ -1,7 +1,7 @@
 import 'package:iscad/core/observer/updater.dart';
 
 class PostObserver {
-  final Function(int quntity)? updatequntity;
+  final Function(int quntity, String id)? updatequntity;
 
   PostObserver({required this.updatequntity}) {
     PostUpdater.instance.attachObserver(this);
