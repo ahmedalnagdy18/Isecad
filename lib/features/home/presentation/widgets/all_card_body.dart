@@ -28,7 +28,6 @@ class _AllCardBodyState extends State<AllCardBody> {
 
     postObserver = PostObserver(
       updatequntity: (updatedQuantity, id) {
-        // Check if the updated product ID exists in the list of products
         if (widget.products.any((product) => product.id == id)) {
           setState(() {
             context
@@ -57,43 +56,60 @@ class _AllCardBodyState extends State<AllCardBody> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    InkWell(
-                        onTap: () {
-                          isLongpress = false;
-                          selectedProductIds.clear();
-                          setState(() {});
-                        },
-                        child: const Text("Cancel")),
-                    InkWell(
-                        onTap: () {
-                          if (selectedProductIds.isNotEmpty) {
-                            final selectedProducts = widget.products
-                                .where((product) =>
-                                    selectedProductIds.contains(product.id))
-                                .toList();
+                    MaterialButton(
+                      shape: Border.all(color: Colors.black),
+                      onPressed: () {
+                        isLongpress = false;
+                        selectedProductIds.clear();
+                        setState(() {});
+                      },
+                      color: Colors.white,
+                      child: const Text(
+                        "Cancel",
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    MaterialButton(
+                      onPressed: () {
+                        if (selectedProductIds.isNotEmpty) {
+                          final selectedProducts = widget.products
+                              .where((product) =>
+                                  selectedProductIds.contains(product.id))
+                              .toList();
 
-                            for (final product in selectedProducts) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => InvoicePage(
-                                    price: product.price,
-                                    productName: product.name,
-                                    quantity: product.quantity,
-                                    productId: product.id,
-                                  ),
-                                  settings: RouteSettings(arguments: [
-                                    product.name,
-                                    product.price.toString(),
-                                    product.quantity.toString(),
-                                    product.id,
-                                  ]),
+                          for (final product in selectedProducts) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => InvoicePage(
+                                  price: product.price,
+                                  productName: product.name,
+                                  quantity: product.quantity,
+                                  productId: product.id,
                                 ),
-                              );
-                            }
+                                settings: RouteSettings(arguments: [
+                                  product.name,
+                                  product.price.toString(),
+                                  product.quantity.toString(),
+                                  product.id,
+                                ]),
+                              ),
+                            );
                           }
-                        },
-                        child: const Text("Next")),
+                        }
+                      },
+                      color: selectedProductIds.isEmpty
+                          ? Colors.grey
+                          : Colors.black,
+                      child: const Text(
+                        "Next",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               )

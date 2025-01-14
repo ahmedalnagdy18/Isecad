@@ -42,7 +42,7 @@ class AddProductDialog extends StatelessWidget {
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(labelText: "Product Price"),
               inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
+                FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                 FilteringTextInputFormatter.deny(RegExp(r'\s')),
               ],
             ),
