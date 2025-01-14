@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:iscad/all_curd.dart';
+import 'package:iscad/features/home/presentation/screens/all_curd.dart';
 import 'package:iscad/core/common/buttons.dart';
 import 'package:iscad/core/common/textfield.dart';
-import 'package:iscad/login_cuibt/login_cubit.dart';
+import 'package:iscad/features/authentication/presentation/login_cuibt/login_cubit.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});

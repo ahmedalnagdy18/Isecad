@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
-import 'package:iscad/crud_cuibt/crud_state.dart';
-import 'package:iscad/product_model.dart';
+import 'package:iscad/features/home/presentation/crud_cuibt/crud_state.dart';
+import 'package:iscad/features/home/domain/product_model.dart';
 
 class ProductCubit extends Cubit<ProductState> {
   ProductCubit() : super(ProductInitial());

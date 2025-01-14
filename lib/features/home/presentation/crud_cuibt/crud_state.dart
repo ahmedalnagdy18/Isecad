@@ -1,5 +1,4 @@
-
-import 'package:iscad/product_model.dart';
+import 'package:iscad/features/home/domain/product_model.dart';
 
 abstract class ProductState {}
 
@@ -29,6 +28,7 @@ class ProductError extends ProductState {
   final String message;
   ProductError(this.message);
 }
+
 class ProductUpdated extends ProductState {
   final Product product;
   ProductUpdated(this.product);

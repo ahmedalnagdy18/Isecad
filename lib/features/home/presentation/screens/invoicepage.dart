@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:iscad/core/observer/updater.dart';
-import 'package:iscad/printing.dart';
+import 'package:iscad/features/home/presentation/screens/printing.dart';
 
 class InvoicePage extends StatefulWidget {
   final String productId;

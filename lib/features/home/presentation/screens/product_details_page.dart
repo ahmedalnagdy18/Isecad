@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:iscad/invoicepage.dart';
-import 'product_model.dart';
+import 'package:iscad/features/home/presentation/screens/invoicepage.dart';
+import '../../domain/product_model.dart';
 
 class ProductDetailsPage extends StatelessWidget {
   final Product product;
@@ -69,7 +69,8 @@ class ProductDetailsPage extends StatelessWidget {
                   }
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Please enter a valid quantity!")),
+                    const SnackBar(
+                        content: Text("Please enter a valid quantity!")),
                   );
                 }
               },
