@@ -148,6 +148,10 @@ class _AllCardBodyState extends State<AllCardBody> {
                   children: [
                     isLongpress == true
                         ? Checkbox(
+                            fillColor:
+                                const WidgetStatePropertyAll(Colors.white),
+                            side: const BorderSide(color: Colors.black),
+                            checkColor: Colors.black,
                             value: isSelected,
                             onChanged: (value) {
                               setState(() {
@@ -162,7 +166,13 @@ class _AllCardBodyState extends State<AllCardBody> {
                         : const SizedBox(),
                     Expanded(
                       child: ListTile(
-                        title: Text(product.name),
+                        title: Text(
+                          product.name,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                         subtitle: BlocBuilder<ProductCubit, ProductState>(
                           builder: (context, state) {
                             if (state is ProductListLoaded) {
