@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iscad/core/observer/observer.dart';
 import 'package:iscad/features/home/domain/product_model.dart';
-import 'package:iscad/features/home/presentation/crud_cuibt/crud_cuibt.dart';
-import 'package:iscad/features/home/presentation/crud_cuibt/crud_state.dart';
+import 'package:iscad/features/home/presentation/cubits/crud_cuibt/crud_cuibt.dart';
+import 'package:iscad/features/home/presentation/cubits/crud_cuibt/crud_state.dart';
 import 'package:iscad/features/home/presentation/screens/invoicepage.dart';
 import 'package:iscad/features/home/presentation/widgets/edit_product_dialog.dart';
+import 'package:iscad/generated/l10n.dart';
 
 class AllCardBody extends StatefulWidget {
   const AllCardBody({super.key, required this.products});
@@ -64,9 +65,9 @@ class _AllCardBodyState extends State<AllCardBody> {
                         setState(() {});
                       },
                       color: Colors.white,
-                      child: const Text(
-                        "Cancel",
-                        style: TextStyle(
+                      child: Text(
+                        S.of(context).cancel,
+                        style: const TextStyle(
                           color: Colors.black,
                         ),
                       ),
@@ -103,9 +104,9 @@ class _AllCardBodyState extends State<AllCardBody> {
                       color: selectedProductIds.isEmpty
                           ? Colors.grey
                           : Colors.black,
-                      child: const Text(
-                        "Next",
-                        style: TextStyle(
+                      child: Text(
+                        S.of(context).next,
+                        style: const TextStyle(
                           color: Colors.white,
                         ),
                       ),
@@ -179,10 +180,10 @@ class _AllCardBodyState extends State<AllCardBody> {
                               final updatedProduct = state.products
                                   .firstWhere((p) => p.id == product.id);
                               return Text(
-                                  "Price: \$${updatedProduct.price.toStringAsFixed(2)} | Quantity: ${updatedProduct.quantity}");
+                                  "${S.of(context).price}: \$${updatedProduct.price.toStringAsFixed(2)} | ${S.of(context).quantity}: ${updatedProduct.quantity}");
                             }
                             return Text(
-                                "Price: \$${product.price.toStringAsFixed(2)} | Quantity: ${product.quantity}");
+                                "${S.of(context).price}: \$${product.price.toStringAsFixed(2)} | ${S.of(context).quantity}: ${product.quantity}");
                           },
                         ),
                         trailing: Row(
@@ -236,8 +237,10 @@ class _AllCardBodyState extends State<AllCardBody> {
 
             if (name.isEmpty || price == null || quantity == null) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                    content: Text("Please fill all fields correctly!")),
+                SnackBar(
+                    content: Text(
+                  S.of(context).pleaseFillAllFieldsCorrectly,
+                )),
               );
               return;
             }

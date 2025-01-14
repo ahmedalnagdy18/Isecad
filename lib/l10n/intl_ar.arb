@@ -1,0 +1,23 @@
+{
+    "dropdown1": "عربي",
+    "dropdown2": "English",
+    "allProducts": "جميع المنتجات",
+    "searchProducts": "ابحث عن المنتجات",
+    "productAdded": "تم إضافة المنتج:",
+    "productUpdated": "تم تحديث المنتج:",
+    "productDeletedSuccessfully": "تم حذف المنتج بنجاح.",
+    "noProductsAvailable": "لا توجد منتجات متاحة.",
+    "cancel": "إلغاء",
+    "next": "التالي",
+    "price": "السعر",
+    "quantity": "الكمية",
+    "pleaseFillAllFieldsCorrectly": "يرجى ملء جميع الحقول بشكل صحيح!",
+    "invoice": "فاتورة",
+    "invoiceDetails": "تفاصيل الفاتورة",
+    "productName": "اسم المنتج",
+    "selectQuantity": "اختر الكمية",
+    "pricePerUnit": "السعر لكل وحدة",
+    "totalPrice": "السعر الإجمالي",
+    "returnToProducts": "العودة إلى المنتجات",
+    "save": "حفظ"
+}

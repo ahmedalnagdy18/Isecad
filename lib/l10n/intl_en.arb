@@ -1,0 +1,23 @@
+{
+    "dropdown1": "AR",
+    "dropdown2": "EN",
+    "allProducts": "All Products",
+    "searchProducts": "Search Products",
+    "productAdded": "Product added:",
+    "productUpdated": "Product updated:",
+    "productDeletedSuccessfully": "Product deleted successfully.",
+    "noProductsAvailable": "No products available.",
+    "cancel": "Cancel",
+    "next": "Next",
+    "price": "Price",
+    "quantity": "Quantity",
+    "pleaseFillAllFieldsCorrectly": "Please fill all fields correctly!",
+    "invoice": "Invoice",
+    "invoiceDetails": "Invoice Details",
+    "productName": "Product Name",
+    "selectQuantity": "Select quantity",
+    "pricePerUnit": "Price per Unit",
+    "totalPrice": "Total Price",
+    "returnToProducts": "Return to Products",
+    "save": "Save"
+}

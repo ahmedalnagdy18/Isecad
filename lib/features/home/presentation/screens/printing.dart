@@ -152,12 +152,14 @@ class _PrintingState extends State<Printing> {
                   pw.Column(
                     mainAxisAlignment: pw.MainAxisAlignment.start,
                     children: [
-                      pw.Text(DateFormat.yMd().add_jm().format(DateTime.now()),
-                          style: pw.TextStyle(
-                            font: fonts,
-                            fontSize: 10,
-                          ),
-                          textDirection: pw.TextDirection.rtl),
+                      pw.Text(
+                        DateFormat.yMd().add_jm().format(DateTime.now()),
+                        style: pw.TextStyle(
+                          font: fonts,
+                          fontSize: 14,
+                        ),
+                        textDirection: pw.TextDirection.rtl,
+                      ),
                       pw.SizedBox(height: 10),
                     ],
                   )

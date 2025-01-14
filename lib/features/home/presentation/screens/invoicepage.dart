@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:iscad/core/observer/updater.dart';
 import 'package:iscad/features/home/presentation/screens/printing.dart';
+import 'package:iscad/generated/l10n.dart';
 
 class InvoicePage extends StatefulWidget {
   final String productId;
@@ -35,9 +36,9 @@ class _InvoicePageState extends State<InvoicePage> {
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.black,
-        title: const Text(
-          "Invoice",
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          S.of(context).invoice,
+          style: const TextStyle(color: Colors.white),
         ),
       ),
       body: Padding(
@@ -46,16 +47,17 @@ class _InvoicePageState extends State<InvoicePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Invoice Details",
+              S.of(context).invoiceDetails,
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 16),
-            Text("Product Name: ${widget.productName}",
+            Text("${S.of(context).productName}: ${widget.productName}",
                 style: const TextStyle(fontSize: 16)),
             const SizedBox(height: 8),
             Row(
               children: [
-                const Text("Quantity:", style: TextStyle(fontSize: 16)),
+                Text(S.of(context).quantity,
+                    style: const TextStyle(fontSize: 16)),
                 const SizedBox(width: 12),
                 Flexible(
                   child: DropdownButton<int>(
@@ -66,7 +68,7 @@ class _InvoicePageState extends State<InvoicePage> {
                               child: Text(number.toString()),
                             ))
                         .toList(),
-                    hint: const Text("Select quantity"),
+                    hint: Text(S.of(context).selectQuantity),
                     onChanged: (value) {
                       setState(() {
                         selectedQuantity = value;
@@ -80,12 +82,12 @@ class _InvoicePageState extends State<InvoicePage> {
             ),
             const SizedBox(height: 8),
             Text(
-              "Price per Unit: ${currencyFormatter.format(widget.price)}",
+              "${S.of(context).pricePerUnit}: ${currencyFormatter.format(widget.price)}",
               style: const TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 16),
             Text(
-              "Total Price: ${currencyFormatter.format(total)}",
+              "${S.of(context).totalPrice}: ${currencyFormatter.format(total)}",
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -103,9 +105,9 @@ class _InvoicePageState extends State<InvoicePage> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: const Text(
-                    "Return to Products",
-                    style: TextStyle(color: Colors.white),
+                  child: Text(
+                    S.of(context).returnToProducts,
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ),
                 const SizedBox(width: 14),
@@ -133,9 +135,9 @@ class _InvoicePageState extends State<InvoicePage> {
                           );
                         }
                       : null,
-                  child: const Text(
-                    "Save",
-                    style: TextStyle(color: Colors.white),
+                  child: Text(
+                    S.of(context).save,
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ),
               ],

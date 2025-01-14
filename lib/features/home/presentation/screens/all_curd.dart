@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iscad/features/home/presentation/crud_cuibt/crud_cuibt.dart';
-import 'package:iscad/features/home/presentation/crud_cuibt/crud_state.dart';
+import 'package:iscad/features/home/presentation/cubits/crud_cuibt/crud_cuibt.dart';
+import 'package:iscad/features/home/presentation/cubits/crud_cuibt/crud_state.dart';
+import 'package:iscad/features/home/presentation/cubits/lang_cubit/locale_cubit.dart';
 import 'package:iscad/features/home/presentation/widgets/add_product_dialog.dart';
 import 'package:iscad/features/home/presentation/widgets/all_card_body.dart';
+import 'package:iscad/generated/l10n.dart';
 
 import '../../domain/product_model.dart';
 
@@ -85,9 +87,9 @@ class _AllProductsViewState extends State<_AllProductsView> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: const Text(
-          "All Products",
-          style: TextStyle(
+        title: Text(
+          S.of(context).allProducts,
+          style: const TextStyle(
             color: Colors.white,
           ),
         ),
@@ -105,16 +107,17 @@ class _AllProductsViewState extends State<_AllProductsView> {
         ],
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           // Search TextField
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               controller: searchController,
-              decoration: const InputDecoration(
-                labelText: "Search Products",
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: S.of(context).searchProducts,
+                prefixIcon: const Icon(Icons.search),
+                border: const OutlineInputBorder(),
               ),
               onChanged: (query) {
                 context.read<ProductCubit>().searchProducts(query);
@@ -127,18 +130,20 @@ class _AllProductsViewState extends State<_AllProductsView> {
                 if (state is ProductAddedSuccess) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                        content: Text("Product added: ${state.product.name}")),
+                        content: Text(
+                            "${S.of(context).productAdded} ${state.product.name}")),
                   );
                 } else if (state is ProductUpdatedSuccess) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                        content:
-                            Text("Product updated: ${state.product.name}")),
+                        content: Text(
+                            "${S.of(context).productUpdated} ${state.product.name}")),
                   );
                 } else if (state is ProductDeletedSuccess) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                        content: Text("Product deleted successfully.")),
+                    SnackBar(
+                        content:
+                            Text(S.of(context).productDeletedSuccessfully)),
                   );
                 } else if (state is ProductError) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -151,8 +156,8 @@ class _AllProductsViewState extends State<_AllProductsView> {
                   final products = state.products;
 
                   if (products.isEmpty) {
-                    return const Center(
-                      child: Text("No products available."),
+                    return Center(
+                      child: Text(S.of(context).noProductsAvailable),
                     );
                   }
 
@@ -167,6 +172,46 @@ class _AllProductsViewState extends State<_AllProductsView> {
               },
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: BlocBuilder<LocaleCubit, ChangeLocaleState>(
+              builder: (context, state) {
+                String currentLanguage = state.locale.languageCode;
+
+                return Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.language, color: Colors.black),
+                    const SizedBox(width: 8),
+                    DropdownButton<String>(
+                      dropdownColor: Colors.white,
+                      focusColor: Colors.white,
+                      value: currentLanguage,
+                      icon: const Icon(Icons.keyboard_arrow_down,
+                          color: Colors.black),
+                      underline: Container(),
+                      items: ['ar', 'en'].map((String languageCode) {
+                        return DropdownMenuItem<String>(
+                          value: languageCode,
+                          child: Text(
+                            languageCode == 'ar'
+                                ? S.of(context).dropdown1
+                                : S.of(context).dropdown2,
+                            style: const TextStyle(color: Colors.black),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        if (newValue != null) {
+                          context.read<LocaleCubit>().changeLanguage(newValue);
+                        }
+                      },
+                    ),
+                  ],
+                );
+              },
+            ),
+          )
         ],
       ),
     );
