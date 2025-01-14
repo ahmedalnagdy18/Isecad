@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:iscad/generated/l10n.dart';
 
 class EditProductDialog extends StatelessWidget {
   const EditProductDialog(
@@ -17,20 +18,26 @@ class EditProductDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("Edit Product"),
+      title: Text(
+        S.of(context).editProduct,
+      ),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: nameController,
-              decoration: const InputDecoration(labelText: "Product Name"),
+              decoration: InputDecoration(
+                labelText: S.of(context).productName,
+              ),
             ),
             const SizedBox(height: 8),
             TextField(
               controller: priceController,
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(labelText: "Product Price"),
+              decoration: InputDecoration(
+                labelText: S.of(context).productPrice,
+              ),
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                 FilteringTextInputFormatter.deny(RegExp(r'\s')),
@@ -43,7 +50,9 @@ class EditProductDialog extends StatelessWidget {
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
               ],
-              decoration: const InputDecoration(labelText: "Product Quantity"),
+              decoration: InputDecoration(
+                labelText: S.of(context).productQuantity,
+              ),
             ),
           ],
         ),
@@ -51,11 +60,15 @@ class EditProductDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: textButtonOnPressed,
-          child: const Text("Cancel"),
+          child: Text(
+            S.of(context).cancel,
+          ),
         ),
         ElevatedButton(
           onPressed: elevatedButtononPressed,
-          child: const Text("Save"),
+          child: Text(
+            S.of(context).save,
+          ),
         ),
       ],
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:iscad/generated/l10n.dart';
 
 class AddProductDialog extends StatelessWidget {
   const AddProductDialog(
@@ -19,14 +20,18 @@ class AddProductDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("Add Product"),
+      title: Text(
+        S.of(context).addProduct,
+      ),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: idController,
-              decoration: const InputDecoration(labelText: "Product ID"),
+              decoration: InputDecoration(
+                labelText: S.of(context).productID,
+              ),
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
               ],
@@ -34,13 +39,14 @@ class AddProductDialog extends StatelessWidget {
             const SizedBox(height: 8),
             TextField(
               controller: nameController,
-              decoration: const InputDecoration(labelText: "Product Name"),
+              decoration: InputDecoration(labelText: S.of(context).productName),
             ),
             const SizedBox(height: 8),
             TextField(
               controller: priceController,
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(labelText: "Product Price"),
+              decoration:
+                  InputDecoration(labelText: S.of(context).productPrice),
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                 FilteringTextInputFormatter.deny(RegExp(r'\s')),
@@ -50,7 +56,8 @@ class AddProductDialog extends StatelessWidget {
             TextField(
               controller: quantityController,
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(labelText: "Product Quantity"),
+              decoration:
+                  InputDecoration(labelText: S.of(context).productQuantity),
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
               ],
@@ -61,11 +68,11 @@ class AddProductDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: textButtonOnPressed,
-          child: const Text("Cancel"),
+          child: Text(S.of(context).cancel),
         ),
         ElevatedButton(
           onPressed: elevatedButtononPressed,
-          child: const Text("Add"),
+          child: Text(S.of(context).add),
         ),
       ],
     );

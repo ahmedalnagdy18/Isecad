@@ -22,10 +22,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "add": MessageLookupByLibrary.simpleMessage("أضف"),
+        "addProduct": MessageLookupByLibrary.simpleMessage("إضافة منتج"),
         "allProducts": MessageLookupByLibrary.simpleMessage("جميع المنتجات"),
         "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
         "dropdown1": MessageLookupByLibrary.simpleMessage("عربي"),
         "dropdown2": MessageLookupByLibrary.simpleMessage("English"),
+        "editProduct": MessageLookupByLibrary.simpleMessage("تعديل المنتج"),
         "invoice": MessageLookupByLibrary.simpleMessage("فاتورة"),
         "invoiceDetails":
             MessageLookupByLibrary.simpleMessage("تفاصيل الفاتورة"),
@@ -40,7 +43,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم إضافة المنتج:"),
         "productDeletedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم حذف المنتج بنجاح."),
+        "productID": MessageLookupByLibrary.simpleMessage("كود المنتج"),
         "productName": MessageLookupByLibrary.simpleMessage("اسم المنتج"),
+        "productPrice": MessageLookupByLibrary.simpleMessage("سعر المنتج"),
+        "productQuantity": MessageLookupByLibrary.simpleMessage("كمية المنتج"),
         "productUpdated":
             MessageLookupByLibrary.simpleMessage("تم تحديث المنتج:"),
         "quantity": MessageLookupByLibrary.simpleMessage("الكمية"),

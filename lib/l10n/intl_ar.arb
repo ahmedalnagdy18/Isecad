@@ -19,5 +19,11 @@
     "pricePerUnit": "السعر لكل وحدة",
     "totalPrice": "السعر الإجمالي",
     "returnToProducts": "العودة إلى المنتجات",
-    "save": "حفظ"
+    "save": "حفظ",
+    "addProduct": "إضافة منتج",
+    "productID": "كود المنتج",
+    "productPrice": "سعر المنتج",
+    "productQuantity": "كمية المنتج",
+    "add": "أضف",
+    "editProduct": "تعديل المنتج"
 }

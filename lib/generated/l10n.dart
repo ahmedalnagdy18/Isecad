@@ -259,6 +259,66 @@ class S {
       args: [],
     );
   }
+
+  /// `Add Product`
+  String get addProduct {
+    return Intl.message(
+      'Add Product',
+      name: 'addProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product ID`
+  String get productID {
+    return Intl.message(
+      'Product ID',
+      name: 'productID',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product Price`
+  String get productPrice {
+    return Intl.message(
+      'Product Price',
+      name: 'productPrice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product Quantity`
+  String get productQuantity {
+    return Intl.message(
+      'Product Quantity',
+      name: 'productQuantity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add`
+  String get add {
+    return Intl.message(
+      'Add',
+      name: 'add',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Product`
+  String get editProduct {
+    return Intl.message(
+      'Edit Product',
+      name: 'editProduct',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

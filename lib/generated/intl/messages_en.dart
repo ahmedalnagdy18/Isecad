@@ -22,10 +22,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "add": MessageLookupByLibrary.simpleMessage("Add"),
+        "addProduct": MessageLookupByLibrary.simpleMessage("Add Product"),
         "allProducts": MessageLookupByLibrary.simpleMessage("All Products"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "dropdown1": MessageLookupByLibrary.simpleMessage("AR"),
         "dropdown2": MessageLookupByLibrary.simpleMessage("EN"),
+        "editProduct": MessageLookupByLibrary.simpleMessage("Edit Product"),
         "invoice": MessageLookupByLibrary.simpleMessage("Invoice"),
         "invoiceDetails":
             MessageLookupByLibrary.simpleMessage("Invoice Details"),
@@ -39,7 +42,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "productAdded": MessageLookupByLibrary.simpleMessage("Product added:"),
         "productDeletedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Product deleted successfully."),
+        "productID": MessageLookupByLibrary.simpleMessage("Product ID"),
         "productName": MessageLookupByLibrary.simpleMessage("Product Name"),
+        "productPrice": MessageLookupByLibrary.simpleMessage("Product Price"),
+        "productQuantity":
+            MessageLookupByLibrary.simpleMessage("Product Quantity"),
         "productUpdated":
             MessageLookupByLibrary.simpleMessage("Product updated:"),
         "quantity": MessageLookupByLibrary.simpleMessage("Quantity"),

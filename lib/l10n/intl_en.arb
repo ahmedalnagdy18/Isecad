@@ -19,5 +19,11 @@
     "pricePerUnit": "Price per Unit",
     "totalPrice": "Total Price",
     "returnToProducts": "Return to Products",
-    "save": "Save"
+    "save": "Save",
+    "addProduct": "Add Product",
+    "productID": "Product ID",
+    "productPrice": "Product Price",
+    "productQuantity": "Product Quantity",
+    "add": "Add",
+    "editProduct": "Edit Product"
 }
