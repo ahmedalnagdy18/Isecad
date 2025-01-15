@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:iscad/core/observer/updater.dart';
 import 'package:iscad/features/home/domain/product_model.dart';
@@ -35,6 +36,7 @@ class _InvoicePageState extends State<InvoicePage> {
 
   @override
   Widget build(BuildContext context) {
+    final Box<Product> _productBox = Hive.box<Product>('productBox');
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -159,9 +161,12 @@ class _InvoicePageState extends State<InvoicePage> {
                                   product.id,
                                 );
                               }
+                              //todo: make this yasta to save the new Quntity in hive
+                              // final updatedProduct = product
+                              //   ..modify(quantity: remainingQuantity);
+                              // _productBox.put(product.id, updatedProduct);
                             }
                           });
-
                           // Navigate to the Printing page
                           Navigator.pushReplacement(
                             context,
