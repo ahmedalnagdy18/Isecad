@@ -1,9 +1,8 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:iscad/core/extentions/app_extentions.dart';
 
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -14,12 +13,14 @@ class Printing extends StatefulWidget {
   static const name = 'print';
   final String productName;
   final int quantity;
+  final double pricePerUnit;
   final double price;
   const Printing(
       {super.key,
       required this.productName,
       required this.quantity,
-      required this.price});
+      required this.price,
+      required this.pricePerUnit});
 
   @override
   State<Printing> createState() => _PrintingState();
@@ -46,6 +47,7 @@ class _PrintingState extends State<Printing> {
     E = "Some default value";
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -96,59 +98,127 @@ class _PrintingState extends State<Printing> {
         pageFormat: format,
         build: (context) {
           return pw.Padding(
-              padding: const pw.EdgeInsets.only(left: 20),
+              padding: const pw.EdgeInsets.symmetric(horizontal: 100),
               child: pw.Column(
                 mainAxisAlignment: pw.MainAxisAlignment.start,
                 crossAxisAlignment: pw.CrossAxisAlignment.stretch,
                 children: [
                   pw.Column(
                     children: [
+                      pw.Text("Isecad",
+                          style: const pw.TextStyle(
+                            fontSize: 22,
+                          )),
+                      pw.SizedBox(height: 8),
                       pw.Row(
-                          mainAxisAlignment: pw.MainAxisAlignment.center,
-                          children: [
-                            pw.Text(widget.productName,
-                                style: pw.TextStyle(font: ttf, fontSize: 15),
-                                textDirection: pw.TextDirection.rtl),
-                            pw.SizedBox(width: 6),
+                        mainAxisAlignment: pw.MainAxisAlignment.center,
+                        children: List.generate(
+                          20,
+                          (index) {
+                            return pw.Container(
+                              width: 15,
+                              height: 1,
+                              color: (index % 2 == 0)
+                                  ? PdfColors.black
+                                  : PdfColors.white,
+                            );
+                          },
+                        ),
+                      ),
+                      pw.SizedBox(height: 12),
+                      pw.Row(children: [
+                        pw.Text("No"),
+                        pw.SizedBox(width: 12),
+                        pw.Text("Item"),
+                        pw.Spacer(),
+                        pw.Text("Price"),
+                        pw.SizedBox(width: 12),
+                        pw.Text("Qty"),
+                        pw.SizedBox(width: 12),
+                        pw.Text("Total"),
+                      ]),
+                      pw.SizedBox(height: 8),
+                      pw.ListView.builder(
+                        itemCount: 1,
+                        itemBuilder: (context, index) {
+                          return pw.Row(children: [
+                            pw.Text("${index + 1}"),
+                            pw.SizedBox(width: 12),
+                            pw.Text(widget.productName),
+                            pw.Spacer(),
                             pw.Text(
-                              'الاسم:',
-                              style: pw.TextStyle(font: font, fontSize: 15),
-                              textDirection: pw.TextDirection.rtl,
-                            ),
-                          ]),
-                      pw.SizedBox(height: 6),
-                      pw.Row(
-                          mainAxisAlignment: pw.MainAxisAlignment.center,
-                          children: [
-                            pw.Text('${widget.quantity}',
-                                style: pw.TextStyle(font: font, fontSize: 20),
-                                textDirection: pw.TextDirection.rtl),
-                            pw.SizedBox(width: 6),
-                            pw.Text(
-                              'العدد:',
-                              style: pw.TextStyle(font: font, fontSize: 15),
-                              textDirection: pw.TextDirection.rtl,
-                            ),
-                          ]),
-                      pw.SizedBox(height: 6),
-                      pw.Row(
-                          mainAxisAlignment: pw.MainAxisAlignment.center,
-                          children: [
-                            pw.Text(
-                              currencyFormatter.format(widget.price),
-                              style: pw.TextStyle(font: font, fontSize: 20),
-                              textDirection: pw.TextDirection.rtl,
-                            ),
-                            pw.SizedBox(width: 6),
-                            pw.Text(
-                              'السعر:',
-                              style: pw.TextStyle(font: font, fontSize: 15),
-                              textDirection: pw.TextDirection.rtl,
-                            ),
-                          ])
+                                currencyFormatter.format(widget.pricePerUnit)),
+                            pw.SizedBox(width: 12),
+                            pw.Text('${widget.quantity}'),
+                            pw.SizedBox(width: 12),
+                            pw.Text(currencyFormatter.format(widget.price)),
+                          ]);
+                        },
+                      )
                     ],
                   ),
+                  pw.SizedBox(height: 8),
+                  pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.center,
+                    children: List.generate(
+                      72,
+                      (index) {
+                        return pw.Container(
+                          width: 4,
+                          height: 1,
+                          color: (index % 2 == 0)
+                              ? PdfColors.black
+                              : PdfColors.white,
+                        );
+                      },
+                    ),
+                  ),
+                  pw.SizedBox(height: 14),
+                  pw.Padding(
+                    padding: const pw.EdgeInsets.symmetric(horizontal: 30),
+                    child: pw.Row(children: [
+                      pw.Text("total"),
+                      pw.Spacer(),
+                      pw.Text(currencyFormatter.format(widget.price)),
+                    ]),
+                  ),
+                  pw.SizedBox(height: 18),
+                  pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.center,
+                    children: List.generate(
+                      72,
+                      (index) {
+                        return pw.Container(
+                          width: 4,
+                          height: 1,
+                          color: (index % 2 == 0)
+                              ? PdfColors.black
+                              : PdfColors.white,
+                        );
+                      },
+                    ),
+                  ),
+                  pw.SizedBox(height: 4),
+                  pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.center,
+                    children: List.generate(
+                      72,
+                      (index) {
+                        return pw.Container(
+                          width: 4,
+                          height: 1,
+                          color: (index % 2 == 0)
+                              ? PdfColors.black
+                              : PdfColors.white,
+                        );
+                      },
+                    ),
+                  ),
                   pw.SizedBox(height: 22),
+                  pw.Center(
+                    child: pw.Text("Thank you!"),
+                  ),
+                  pw.SizedBox(height: 4),
                   pw.Column(
                     mainAxisAlignment: pw.MainAxisAlignment.start,
                     children: [

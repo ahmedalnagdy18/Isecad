@@ -127,6 +127,7 @@ class _InvoicePageState extends State<InvoicePage> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => Printing(
+                                pricePerUnit: widget.price,
                                 price: total,
                                 productName: widget.productName,
                                 quantity: selectedQuantity ?? 1,
