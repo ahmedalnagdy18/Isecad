@@ -21,13 +21,13 @@ class _AllCardBodyState extends State<AllCardBody> {
   int? newQuantity;
 
   final Set<String> selectedProductIds = {};
-  late PostObserver postObserver;
+  late QuntityObserver postObserver;
 
   @override
   void initState() {
     super.initState();
 
-    postObserver = PostObserver(
+    postObserver = QuntityObserver(
       updatequntity: (updatedQuantity, id) {
         if (widget.products.any((product) => product.id == id)) {
           setState(() {
@@ -80,25 +80,14 @@ class _AllCardBodyState extends State<AllCardBody> {
                                   selectedProductIds.contains(product.id))
                               .toList();
 
-                          for (final product in selectedProducts) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => InvoicePage(
-                                  price: product.price,
-                                  productName: product.name,
-                                  quantity: product.quantity,
-                                  productId: product.id,
-                                ),
-                                settings: RouteSettings(arguments: [
-                                  product.name,
-                                  product.price.toString(),
-                                  product.quantity.toString(),
-                                  product.id,
-                                ]),
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => InvoicePage(
+                                products: selectedProducts,
                               ),
-                            );
-                          }
+                            ),
+                          );
                         }
                       },
                       color: selectedProductIds.isEmpty
@@ -131,17 +120,8 @@ class _AllCardBodyState extends State<AllCardBody> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => InvoicePage(
-                        price: product.price,
-                        productName: product.name,
-                        quantity: product.quantity,
-                        productId: product.id,
+                        products: [product],
                       ),
-                      settings: RouteSettings(arguments: [
-                        product.name,
-                        product.price.toString(),
-                        product.quantity.toString(),
-                        product.id
-                      ]),
                     ),
                   );
                 },

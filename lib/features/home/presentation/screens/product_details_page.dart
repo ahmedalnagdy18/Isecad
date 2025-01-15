@@ -59,10 +59,8 @@ class ProductDetailsPage extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => InvoicePage(
-                          productName: product.name,
-                          quantity: enteredQuantity,
-                          price: product.price,
-                          productId: product.id,
+                          //todo: fix this
+                          products: [],
                         ),
                       ),
                     );

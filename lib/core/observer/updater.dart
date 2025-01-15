@@ -1,21 +1,21 @@
 import 'package:iscad/core/observer/observer.dart';
 
-class PostUpdater {
-  static final PostUpdater instance = PostUpdater._();
+class QuntityUpdater {
+  static final QuntityUpdater instance = QuntityUpdater._();
 
-  PostUpdater._();
+  QuntityUpdater._();
 
-  final List<PostObserver> _observers = [];
+  final List<QuntityObserver> _observers = [];
 
-  void attachObserver(PostObserver observer) {
+  void attachObserver(QuntityObserver observer) {
     _observers.add(observer);
   }
 
-  void deAttachObserver(PostObserver observer) {
+  void deAttachObserver(QuntityObserver observer) {
     _observers.remove(observer);
   }
 
-  void notifyLikeUpdate(int quntity, String id) {
+  void notifyQuntityUpdate(int quntity, String id) {
     for (var observer in _observers) {
       if (observer.updatequntity != null) {
         observer.updatequntity!(quntity, id);

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:iscad/core/extentions/app_extentions.dart';
+import 'package:iscad/features/home/domain/product_model.dart';
 
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -11,16 +11,15 @@ import 'package:printing/printing.dart';
 
 class Printing extends StatefulWidget {
   static const name = 'print';
-  final String productName;
-  final int quantity;
-  final double pricePerUnit;
-  final double price;
-  const Printing(
-      {super.key,
-      required this.productName,
-      required this.quantity,
-      required this.price,
-      required this.pricePerUnit});
+  final List<Product> products;
+  final Map<int, int?> selectedQuantities;
+  final Map<int, double> totals;
+  const Printing({
+    super.key,
+    required this.products,
+    required this.selectedQuantities,
+    required this.totals,
+  });
 
   @override
   State<Printing> createState() => _PrintingState();
@@ -92,6 +91,8 @@ class _PrintingState extends State<Printing> {
     final ttf = pw.Font.ttf(fontData);
     final font = pw.Font.ttf(fontData);
     final NumberFormat currencyFormatter = NumberFormat("#,##0", "en_US");
+    final double grandTotal =
+        widget.totals.values.fold(0.0, (sum, total) => sum + (total));
 
     pdf.addPage(
       pw.Page(
@@ -105,10 +106,10 @@ class _PrintingState extends State<Printing> {
                 children: [
                   pw.Column(
                     children: [
-                      pw.Text("Isecad",
-                          style: const pw.TextStyle(
-                            fontSize: 22,
-                          )),
+                      pw.Text(
+                        "Isecad",
+                        style: const pw.TextStyle(fontSize: 22),
+                      ),
                       pw.SizedBox(height: 8),
                       pw.Row(
                         mainAxisAlignment: pw.MainAxisAlignment.center,
@@ -126,35 +127,60 @@ class _PrintingState extends State<Printing> {
                         ),
                       ),
                       pw.SizedBox(height: 12),
-                      pw.Row(children: [
-                        pw.Text("No"),
-                        pw.SizedBox(width: 12),
-                        pw.Text("Item"),
-                        pw.Spacer(),
-                        pw.Text("Price"),
-                        pw.SizedBox(width: 12),
-                        pw.Text("Qty"),
-                        pw.SizedBox(width: 12),
-                        pw.Text("Total"),
-                      ]),
-                      pw.SizedBox(height: 8),
-                      pw.ListView.builder(
-                        itemCount: 1,
-                        itemBuilder: (context, index) {
-                          return pw.Row(children: [
-                            pw.Text("${index + 1}"),
-                            pw.SizedBox(width: 12),
-                            pw.Text(widget.productName),
-                            pw.Spacer(),
-                            pw.Text(
-                                currencyFormatter.format(widget.pricePerUnit)),
-                            pw.SizedBox(width: 12),
-                            pw.Text('${widget.quantity}'),
-                            pw.SizedBox(width: 12),
-                            pw.Text(currencyFormatter.format(widget.price)),
-                          ]);
+
+                      // Header Row
+                      pw.Table(
+                        columnWidths: {
+                          0: const pw.FlexColumnWidth(1), // No column
+                          1: const pw.FlexColumnWidth(3), // Item column
+                          2: const pw.FlexColumnWidth(2), // Price column
+                          3: const pw.FlexColumnWidth(1), // Qty column
+                          4: const pw.FlexColumnWidth(2), // Total column
                         },
-                      )
+                        children: [
+                          pw.TableRow(
+                            children: [
+                              pw.Text("No"),
+                              pw.Text("Item"),
+                              pw.Text("Price", textAlign: pw.TextAlign.right),
+                              pw.Text("Qty", textAlign: pw.TextAlign.center),
+                              pw.Text("Total", textAlign: pw.TextAlign.right),
+                            ],
+                          ),
+                        ],
+                      ),
+                      pw.SizedBox(height: 8),
+
+                      // Table Rows for Items
+                      pw.Table(
+                        columnWidths: {
+                          0: const pw.FlexColumnWidth(1), // No column
+                          1: const pw.FlexColumnWidth(3), // Item column
+                          2: const pw.FlexColumnWidth(2), // Price column
+                          3: const pw.FlexColumnWidth(1), // Qty column
+                          4: const pw.FlexColumnWidth(2), // Total column
+                        },
+                        children: widget.products.asMap().entries.map((entry) {
+                          final index = entry.key;
+                          final product = entry.value;
+                          final quantity =
+                              widget.selectedQuantities[index] ?? 0;
+                          final totalPrice = widget.totals[index] ?? 0.0;
+
+                          return pw.TableRow(
+                            children: [
+                              pw.Text("${index + 1}"), // No
+                              pw.Text(product.name), // Item
+                              pw.Text(currencyFormatter.format(product.price),
+                                  textAlign: pw.TextAlign.right), // Price
+                              pw.Text('$quantity',
+                                  textAlign: pw.TextAlign.center), // Qty
+                              pw.Text(currencyFormatter.format(totalPrice),
+                                  textAlign: pw.TextAlign.right), // Total
+                            ],
+                          );
+                        }).toList(),
+                      ),
                     ],
                   ),
                   pw.SizedBox(height: 8),
@@ -179,7 +205,7 @@ class _PrintingState extends State<Printing> {
                     child: pw.Row(children: [
                       pw.Text("total"),
                       pw.Spacer(),
-                      pw.Text(currencyFormatter.format(widget.price)),
+                      pw.Text(currencyFormatter.format(grandTotal)),
                     ]),
                   ),
                   pw.SizedBox(height: 18),
@@ -223,7 +249,7 @@ class _PrintingState extends State<Printing> {
                     mainAxisAlignment: pw.MainAxisAlignment.start,
                     children: [
                       pw.Text(
-                        DateFormat.yMd().add_jm().format(DateTime.now()),
+                        "${DateFormat.yMd().format(DateTime.now())}   ${DateFormat.jm().format(DateTime.now())}",
                         style: pw.TextStyle(
                           font: fonts,
                           fontSize: 14,
