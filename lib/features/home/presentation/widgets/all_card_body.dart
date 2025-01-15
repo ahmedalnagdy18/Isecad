@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iscad/core/observer/observer.dart';
-import 'package:iscad/features/home/domain/product_model.dart';
+import 'package:iscad/features/home/domain/product_model/product_model.dart';
 import 'package:iscad/features/home/presentation/cubits/crud_cuibt/crud_cuibt.dart';
 import 'package:iscad/features/home/presentation/cubits/crud_cuibt/crud_state.dart';
 import 'package:iscad/features/home/presentation/screens/invoicepage.dart';

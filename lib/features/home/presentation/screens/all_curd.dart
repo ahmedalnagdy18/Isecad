@@ -8,7 +8,7 @@ import 'package:iscad/features/home/presentation/widgets/add_product_dialog.dart
 import 'package:iscad/features/home/presentation/widgets/all_card_body.dart';
 import 'package:iscad/generated/l10n.dart';
 
-import '../../domain/product_model.dart';
+import '../../domain/product_model/product_model.dart';
 
 class AllProductsPage extends StatelessWidget {
   const AllProductsPage({super.key});

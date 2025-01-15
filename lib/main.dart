@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:iscad/features/home/domain/quantity_log/quantity_log.dart';
 import 'package:iscad/features/home/presentation/cubits/lang_cubit/locale_cubit.dart';
 import 'package:iscad/features/home/presentation/screens/all_curd.dart';
 import 'package:iscad/features/home/presentation/cubits/crud_cuibt/crud_cuibt.dart';
-import 'package:iscad/features/home/domain/product_model.dart';
+import 'package:iscad/features/home/domain/product_model/product_model.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:iscad/generated/l10n.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,6 +16,8 @@ void main() async {
   await Hive.openBox('userBox');
   Hive.registerAdapter(ProductAdapter());
   await Hive.openBox<Product>('productBox');
+  Hive.registerAdapter(QuantityLogAdapter());
+  await Hive.openBox<QuantityLog>('quantityLogBox');
   runApp(const MyApp());
 }
 

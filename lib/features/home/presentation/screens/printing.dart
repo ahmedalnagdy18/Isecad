@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:iscad/features/home/domain/product_model.dart';
+import 'package:iscad/features/home/domain/product_model/product_model.dart';
 
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -85,11 +85,7 @@ class _PrintingState extends State<Printing> {
       String C, String D, String E) async {
     final pdf = pw.Document(version: PdfVersion.pdf_1_4, compress: true);
 
-    final fonts = await fontFromAssetBundle('lib/assests/EBGaramond-Bold.ttf');
-    final ByteData fontData =
-        await rootBundle.load("lib/assests/alfont_com_arial-1.ttf");
-    final ttf = pw.Font.ttf(fontData);
-    final font = pw.Font.ttf(fontData);
+    final font = await fontFromAssetBundle('lib/assests/EBGaramond-Bold.ttf');
     final NumberFormat currencyFormatter = NumberFormat("#,##0", "en_US");
     final double grandTotal =
         widget.totals.values.fold(0.0, (sum, total) => sum + (total));
@@ -108,7 +104,7 @@ class _PrintingState extends State<Printing> {
                     children: [
                       pw.Text(
                         "Isecad",
-                        style: const pw.TextStyle(fontSize: 22),
+                        style: pw.TextStyle(font: font, fontSize: 22),
                       ),
                       pw.SizedBox(height: 8),
                       pw.Row(
@@ -131,20 +127,26 @@ class _PrintingState extends State<Printing> {
                       // Header Row
                       pw.Table(
                         columnWidths: {
-                          0: const pw.FlexColumnWidth(1), // No column
-                          1: const pw.FlexColumnWidth(3), // Item column
-                          2: const pw.FlexColumnWidth(2), // Price column
-                          3: const pw.FlexColumnWidth(1), // Qty column
-                          4: const pw.FlexColumnWidth(2), // Total column
+                          0: const pw.FlexColumnWidth(1),
+                          1: const pw.FlexColumnWidth(3),
+                          2: const pw.FlexColumnWidth(2),
+                          3: const pw.FlexColumnWidth(1),
+                          4: const pw.FlexColumnWidth(2),
                         },
                         children: [
                           pw.TableRow(
                             children: [
-                              pw.Text("No"),
-                              pw.Text("Item"),
-                              pw.Text("Price", textAlign: pw.TextAlign.right),
-                              pw.Text("Qty", textAlign: pw.TextAlign.center),
-                              pw.Text("Total", textAlign: pw.TextAlign.right),
+                              pw.Text("No", style: pw.TextStyle(font: font)),
+                              pw.Text("Item", style: pw.TextStyle(font: font)),
+                              pw.Text("Price",
+                                  style: pw.TextStyle(font: font),
+                                  textAlign: pw.TextAlign.right),
+                              pw.Text("Qty",
+                                  style: pw.TextStyle(font: font),
+                                  textAlign: pw.TextAlign.center),
+                              pw.Text("Total",
+                                  style: pw.TextStyle(font: font),
+                                  textAlign: pw.TextAlign.right),
                             ],
                           ),
                         ],
@@ -154,11 +156,11 @@ class _PrintingState extends State<Printing> {
                       // Table Rows for Items
                       pw.Table(
                         columnWidths: {
-                          0: const pw.FlexColumnWidth(1), // No column
-                          1: const pw.FlexColumnWidth(3), // Item column
-                          2: const pw.FlexColumnWidth(2), // Price column
-                          3: const pw.FlexColumnWidth(1), // Qty column
-                          4: const pw.FlexColumnWidth(2), // Total column
+                          0: const pw.FlexColumnWidth(1),
+                          1: const pw.FlexColumnWidth(3),
+                          2: const pw.FlexColumnWidth(2),
+                          3: const pw.FlexColumnWidth(1),
+                          4: const pw.FlexColumnWidth(2),
                         },
                         children: widget.products.asMap().entries.map((entry) {
                           final index = entry.key;
@@ -169,14 +171,19 @@ class _PrintingState extends State<Printing> {
 
                           return pw.TableRow(
                             children: [
-                              pw.Text("${index + 1}"), // No
-                              pw.Text(product.name), // Item
+                              pw.Text("${index + 1}",
+                                  style: pw.TextStyle(font: font)),
+                              pw.Text(product.name,
+                                  style: pw.TextStyle(font: font)),
                               pw.Text(currencyFormatter.format(product.price),
-                                  textAlign: pw.TextAlign.right), // Price
+                                  style: pw.TextStyle(font: font),
+                                  textAlign: pw.TextAlign.right),
                               pw.Text('$quantity',
-                                  textAlign: pw.TextAlign.center), // Qty
+                                  style: pw.TextStyle(font: font),
+                                  textAlign: pw.TextAlign.center),
                               pw.Text(currencyFormatter.format(totalPrice),
-                                  textAlign: pw.TextAlign.right), // Total
+                                  style: pw.TextStyle(font: font),
+                                  textAlign: pw.TextAlign.right),
                             ],
                           );
                         }).toList(),
@@ -203,9 +210,10 @@ class _PrintingState extends State<Printing> {
                   pw.Padding(
                     padding: const pw.EdgeInsets.symmetric(horizontal: 30),
                     child: pw.Row(children: [
-                      pw.Text("total"),
+                      pw.Text("total", style: pw.TextStyle(font: font)),
                       pw.Spacer(),
-                      pw.Text(currencyFormatter.format(grandTotal)),
+                      pw.Text(currencyFormatter.format(grandTotal),
+                          style: pw.TextStyle(font: font)),
                     ]),
                   ),
                   pw.SizedBox(height: 18),
@@ -242,7 +250,10 @@ class _PrintingState extends State<Printing> {
                   ),
                   pw.SizedBox(height: 22),
                   pw.Center(
-                    child: pw.Text("Thank you!"),
+                    child: pw.Text(
+                      "Thank you!",
+                      style: pw.TextStyle(font: font, fontSize: 14),
+                    ),
                   ),
                   pw.SizedBox(height: 4),
                   pw.Column(
@@ -250,10 +261,7 @@ class _PrintingState extends State<Printing> {
                     children: [
                       pw.Text(
                         "${DateFormat.yMd().format(DateTime.now())}   ${DateFormat.jm().format(DateTime.now())}",
-                        style: pw.TextStyle(
-                          font: fonts,
-                          fontSize: 14,
-                        ),
+                        style: pw.TextStyle(font: font, fontSize: 14),
                         textDirection: pw.TextDirection.rtl,
                       ),
                       pw.SizedBox(height: 10),

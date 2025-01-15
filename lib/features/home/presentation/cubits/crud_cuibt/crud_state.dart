@@ -1,4 +1,4 @@
-import 'package:iscad/features/home/domain/product_model.dart';
+import 'package:iscad/features/home/domain/product_model/product_model.dart';
 
 abstract class ProductState {}
 

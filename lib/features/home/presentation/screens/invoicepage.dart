@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:iscad/core/observer/updater.dart';
-import 'package:iscad/features/home/domain/product_model.dart';
+import 'package:iscad/features/home/domain/product_model/product_model.dart';
+import 'package:iscad/features/home/presentation/cubits/crud_cuibt/crud_cuibt.dart';
 import 'package:iscad/features/home/presentation/screens/printing.dart';
 import 'package:iscad/generated/l10n.dart';
 
@@ -36,7 +37,6 @@ class _InvoicePageState extends State<InvoicePage> {
 
   @override
   Widget build(BuildContext context) {
-    final Box<Product> _productBox = Hive.box<Product>('productBox');
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -156,15 +156,18 @@ class _InvoicePageState extends State<InvoicePage> {
                                   product.quantity - selectedQuantity;
 
                               if (remainingQuantity >= 0) {
+                                // Notify the quantity update
                                 QuntityUpdater.instance.notifyQuntityUpdate(
                                   remainingQuantity,
                                   product.id,
                                 );
+
+                                // Save the updated quantity in Hive
+                                BlocProvider.of<ProductCubit>(context).updateProductQuantity(
+                                  product.id,
+                                  remainingQuantity,
+                                );
                               }
-                              //todo: make this yasta to save the new Quntity in hive
-                              // final updatedProduct = product
-                              //   ..modify(quantity: remainingQuantity);
-                              // _productBox.put(product.id, updatedProduct);
                             }
                           });
                           // Navigate to the Printing page

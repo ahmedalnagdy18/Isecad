@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iscad/features/home/presentation/screens/invoicepage.dart';
-import '../../domain/product_model.dart';
+import '../../domain/product_model/product_model.dart';
 
 class ProductDetailsPage extends StatelessWidget {
   final Product product;

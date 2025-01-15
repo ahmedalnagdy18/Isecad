@@ -1,26 +1,27 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
+import 'package:iscad/features/home/domain/quantity_log/quantity_log.dart';
 import 'package:iscad/features/home/presentation/cubits/crud_cuibt/crud_state.dart';
-import 'package:iscad/features/home/domain/product_model.dart';
+import 'package:iscad/features/home/domain/product_model/product_model.dart';
 
 class ProductCubit extends Cubit<ProductState> {
   ProductCubit() : super(ProductInitial());
 
   final Box<Product> _productBox = Hive.box<Product>('productBox');
 
-  void addProduct(Product product) {
-    try {
-      if (_productBox.containsKey(product.id)) {
-        emit(ProductError("Product with the same ID already exists."));
-        return;
-      }
-      _productBox.put(product.id, product);
-      emit(ProductAddedSuccess(product));
-      fetchProducts();
-    } catch (e) {
-      emit(ProductError("Failed to add product: ${e.toString()}"));
+void addProduct(Product product) {
+  try {
+    if (_productBox.values.any((existingProduct) => existingProduct.id == product.id)) {
+      emit(ProductError("Product with the same ID already exists."));
+      return;
     }
+    _productBox.put(product.id, product);
+    emit(ProductAddedSuccess(product));
+    fetchProducts();
+  } catch (e) {
+    emit(ProductError("Failed to add product: ${e.toString()}"));
   }
+}
 
   void fetchProducts() {
     try {
@@ -104,23 +105,51 @@ class ProductCubit extends Cubit<ProductState> {
     }
   }
 
-  void updateProductQuantity(String productId, int newQuantity) {
-    try {
-      final product = _productBox.get(productId);
-      if (product != null) {
-        final updatedProduct = Product(
-          id: product.id,
-          name: product.name,
-          price: product.price,
-          quantity: newQuantity,
-        );
-        _productBox.put(productId, updatedProduct);
-        emit(ProductUpdated(updatedProduct));
-      } else {
-        emit(ProductError("Product not found!"));
-      }
-    } catch (e) {
-      emit(ProductError("Failed to update product: ${e.toString()}"));
+void updateProductQuantity(String productId, int newQuantity) {
+  try {
+    final product = _productBox.get(productId);
+
+    if (product == null) {
+      emit(ProductError("Product not found!"));
+      return;
     }
+
+    final currentQuantity = product.quantity;
+
+    // Calculate sold quantity
+    final soldQuantity = currentQuantity - newQuantity;
+    if (soldQuantity < 0) {
+      emit(ProductError("New quantity cannot exceed current quantity. Check the input."));
+      return;
+    }
+
+    // Calculate total price for the sold quantity
+    final totalPrice = soldQuantity * product.price;
+
+    // Update the product in the product box
+    final updatedProduct = Product(
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      quantity: newQuantity,
+    );
+    _productBox.put(productId, updatedProduct);
+
+    // Save the sale in the quantity history box
+    final quantityHistoryBox = Hive.box<QuantityLog>('quantityLogBox');
+    final logEntry = QuantityLog(
+      productId: product.id,
+      productName: product.name,
+      soldQuantity: soldQuantity,
+      timestamp: DateTime.now(),
+      totalPrice: totalPrice,
+    );
+    quantityHistoryBox.add(logEntry);
+
+    emit(ProductUpdated(updatedProduct));
+  } catch (e) {
+    emit(ProductError("Failed to update product: ${e.toString()}"));
   }
+}
+
 }
