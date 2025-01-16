@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iscad/core/colors/app_colors.dart';
 import 'package:iscad/core/observer/observer.dart';
 import 'package:iscad/features/home/domain/product_model/product_model.dart';
 import 'package:iscad/features/home/presentation/cubits/crud_cuibt/crud_cuibt.dart';
@@ -58,7 +59,7 @@ class _AllCardBodyState extends State<AllCardBody> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     MaterialButton(
-                      shape: Border.all(color: Colors.black),
+                      elevation: 0,
                       onPressed: () {
                         isLongpress = false;
                         selectedProductIds.clear();
@@ -73,6 +74,8 @@ class _AllCardBodyState extends State<AllCardBody> {
                       ),
                     ),
                     MaterialButton(
+                      shape: ContinuousRectangleBorder(
+                          borderRadius: BorderRadius.circular(12)),
                       onPressed: () {
                         if (selectedProductIds.isNotEmpty) {
                           final selectedProducts = widget.products
@@ -92,7 +95,7 @@ class _AllCardBodyState extends State<AllCardBody> {
                       },
                       color: selectedProductIds.isEmpty
                           ? Colors.grey
-                          : Colors.black,
+                          : AppColors.mainBlue,
                       child: Text(
                         S.of(context).next,
                         style: const TextStyle(
@@ -103,7 +106,20 @@ class _AllCardBodyState extends State<AllCardBody> {
                   ],
                 ),
               )
-            : const SizedBox(),
+            : MaterialButton(
+                elevation: 0,
+                onPressed: () {
+                  isLongpress = true;
+                  setState(() {});
+                },
+                color: Colors.white,
+                child: Text(
+                  S.of(context).select,
+                  style: const TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
+              ),
         Expanded(
           child: ListView.builder(
             itemCount: widget.products.length,
@@ -132,7 +148,7 @@ class _AllCardBodyState extends State<AllCardBody> {
                             fillColor:
                                 const WidgetStatePropertyAll(Colors.white),
                             side: const BorderSide(color: Colors.black),
-                            checkColor: Colors.black,
+                            checkColor: Colors.green,
                             value: isSelected,
                             onChanged: (value) {
                               setState(() {

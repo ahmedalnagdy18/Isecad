@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:iscad/core/colors/app_colors.dart';
 import 'package:iscad/core/observer/updater.dart';
 import 'package:iscad/features/home/domain/product_model/product_model.dart';
 import 'package:iscad/features/home/presentation/cubits/crud_cuibt/crud_cuibt.dart';
@@ -41,7 +42,7 @@ class _InvoicePageState extends State<InvoicePage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
-        backgroundColor: Colors.black,
+        backgroundColor: AppColors.mainBlue,
         title: Text(
           S.of(context).invoice,
           style: const TextStyle(color: Colors.white),
@@ -129,7 +130,7 @@ class _InvoicePageState extends State<InvoicePage> {
               children: [
                 ElevatedButton(
                   style: const ButtonStyle(
-                      backgroundColor: WidgetStatePropertyAll(Colors.black)),
+                      backgroundColor: WidgetStatePropertyAll(Colors.grey)),
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -143,7 +144,7 @@ class _InvoicePageState extends State<InvoicePage> {
                   style: ButtonStyle(
                     backgroundColor: WidgetStateProperty.all(
                       selectedQuantities.values.every((q) => q != null)
-                          ? Colors.green
+                          ? AppColors.mainBlue
                           : Colors.grey,
                     ),
                   ),
@@ -163,7 +164,8 @@ class _InvoicePageState extends State<InvoicePage> {
                                 );
 
                                 // Save the updated quantity in Hive
-                                BlocProvider.of<ProductCubit>(context).updateProductQuantity(
+                                BlocProvider.of<ProductCubit>(context)
+                                    .updateProductQuantity(
                                   product.id,
                                   remainingQuantity,
                                 );

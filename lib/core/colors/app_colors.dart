@@ -14,6 +14,7 @@ class AppColors {
   static Color clickedTextfieldBorder = const Color(0xFF858589);
   static Color iconAdd = const Color(0xFF6A717F);
   static Color toastmessage = const Color(0xff04FFAA);
+  static Color mainBlue = const Color.fromARGB(213, 14, 48, 76);
   //text colors
   static Color hintText = const Color(0xFF9D9C99);
   static Color forgetPassword = const Color(0xFF6A717F);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:iscad/core/colors/app_colors.dart';
 import 'package:iscad/generated/l10n.dart';
 
 class EditProductDialog extends StatelessWidget {
@@ -18,6 +19,7 @@ class EditProductDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: Colors.white,
       title: Text(
         S.of(context).editProduct,
       ),
@@ -62,12 +64,16 @@ class EditProductDialog extends StatelessWidget {
           onPressed: textButtonOnPressed,
           child: Text(
             S.of(context).cancel,
+            style: const TextStyle(color: Colors.black),
           ),
         ),
         ElevatedButton(
+          style: ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(AppColors.mainBlue)),
           onPressed: elevatedButtononPressed,
           child: Text(
             S.of(context).save,
+            style: const TextStyle(color: Colors.white),
           ),
         ),
       ],

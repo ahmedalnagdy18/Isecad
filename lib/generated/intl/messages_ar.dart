@@ -25,10 +25,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "add": MessageLookupByLibrary.simpleMessage("أضف"),
         "addProduct": MessageLookupByLibrary.simpleMessage("إضافة منتج"),
         "allProducts": MessageLookupByLibrary.simpleMessage("جميع المنتجات"),
+        "back": MessageLookupByLibrary.simpleMessage("رجوع"),
         "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
         "dropdown1": MessageLookupByLibrary.simpleMessage("عربي"),
         "dropdown2": MessageLookupByLibrary.simpleMessage("English"),
         "editProduct": MessageLookupByLibrary.simpleMessage("تعديل المنتج"),
+        "generate_all_sales_report":
+            MessageLookupByLibrary.simpleMessage("إنشاء تقرير كل المبيعات"),
+        "generate_specific_date_report":
+            MessageLookupByLibrary.simpleMessage("إنشاء تقرير لتاريخ محدد"),
+        "generate_todays_report":
+            MessageLookupByLibrary.simpleMessage("إنشاء تقرير اليوم"),
         "invoice": MessageLookupByLibrary.simpleMessage("فاتورة"),
         "invoiceDetails":
             MessageLookupByLibrary.simpleMessage("تفاصيل الفاتورة"),
@@ -52,9 +59,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "quantity": MessageLookupByLibrary.simpleMessage("الكمية"),
         "returnToProducts":
             MessageLookupByLibrary.simpleMessage("العودة إلى المنتجات"),
+        "sales_report": MessageLookupByLibrary.simpleMessage("تقرير المبيعات"),
         "save": MessageLookupByLibrary.simpleMessage("حفظ"),
         "searchProducts":
             MessageLookupByLibrary.simpleMessage("ابحث عن المنتجات"),
+        "select": MessageLookupByLibrary.simpleMessage("اختر"),
         "selectQuantity": MessageLookupByLibrary.simpleMessage("اختر الكمية"),
         "totalPrice": MessageLookupByLibrary.simpleMessage("السعر الإجمالي")
       };

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iscad/core/colors/app_colors.dart';
 import 'package:iscad/features/home/presentation/cubits/crud_cuibt/crud_cuibt.dart';
 import 'package:iscad/features/home/presentation/cubits/crud_cuibt/crud_state.dart';
 import 'package:iscad/features/home/presentation/cubits/lang_cubit/locale_cubit.dart';
 import 'package:iscad/features/home/presentation/widgets/add_product_dialog.dart';
 import 'package:iscad/features/home/presentation/widgets/all_card_body.dart';
+import 'package:iscad/features/home/presentation/screens/generate_excel.dart';
 import 'package:iscad/generated/l10n.dart';
 
 import '../../domain/product_model/product_model.dart';
@@ -86,7 +88,7 @@ class _AllProductsViewState extends State<_AllProductsView> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: AppColors.mainBlue,
         title: Text(
           S.of(context).allProducts,
           style: const TextStyle(
@@ -95,14 +97,31 @@ class _AllProductsViewState extends State<_AllProductsView> {
         ),
         iconTheme: const IconThemeData(color: Colors.white),
         actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.add,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              _showAddProductDialog(context);
-            },
+          Row(
+            children: [
+              IconButton(
+                icon: const Icon(
+                  Icons.data_thresholding_outlined,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SalesReportPage(),
+                      ));
+                },
+              ),
+              IconButton(
+                icon: const Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  _showAddProductDialog(context);
+                },
+              ),
+            ],
           ),
         ],
       ),
@@ -181,14 +200,19 @@ class _AllProductsViewState extends State<_AllProductsView> {
                 return Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.language, color: Colors.black),
+                    Icon(
+                      Icons.language,
+                      color: AppColors.mainBlue,
+                    ),
                     const SizedBox(width: 8),
                     DropdownButton<String>(
                       dropdownColor: Colors.white,
                       focusColor: Colors.white,
                       value: currentLanguage,
-                      icon: const Icon(Icons.keyboard_arrow_down,
-                          color: Colors.black),
+                      icon: Icon(
+                        Icons.keyboard_arrow_down,
+                        color: AppColors.mainBlue,
+                      ),
                       underline: Container(),
                       items: ['ar', 'en'].map((String languageCode) {
                         return DropdownMenuItem<String>(
@@ -197,7 +221,9 @@ class _AllProductsViewState extends State<_AllProductsView> {
                             languageCode == 'ar'
                                 ? S.of(context).dropdown1
                                 : S.of(context).dropdown2,
-                            style: const TextStyle(color: Colors.black),
+                            style: TextStyle(
+                              color: AppColors.mainBlue,
+                            ),
                           ),
                         );
                       }).toList(),

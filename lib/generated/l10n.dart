@@ -319,6 +319,66 @@ class S {
       args: [],
     );
   }
+
+  /// `Select`
+  String get select {
+    return Intl.message(
+      'Select',
+      name: 'select',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Generate Today's Report`
+  String get generate_todays_report {
+    return Intl.message(
+      'Generate Today\'s Report',
+      name: 'generate_todays_report',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Generate Report for a Specific Date`
+  String get generate_specific_date_report {
+    return Intl.message(
+      'Generate Report for a Specific Date',
+      name: 'generate_specific_date_report',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Generate All Sales Report`
+  String get generate_all_sales_report {
+    return Intl.message(
+      'Generate All Sales Report',
+      name: 'generate_all_sales_report',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sales Report`
+  String get sales_report {
+    return Intl.message(
+      'Sales Report',
+      name: 'sales_report',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Back`
+  String get back {
+    return Intl.message(
+      'Back',
+      name: 'back',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

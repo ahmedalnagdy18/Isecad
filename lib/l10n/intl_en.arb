@@ -25,5 +25,11 @@
     "productPrice": "Product Price",
     "productQuantity": "Product Quantity",
     "add": "Add",
-    "editProduct": "Edit Product"
+    "editProduct": "Edit Product",
+    "select": "Select",
+    "generate_todays_report": "Generate Today's Report",
+    "generate_specific_date_report": "Generate Report for a Specific Date",
+    "generate_all_sales_report": "Generate All Sales Report",
+    "sales_report": "Sales Report",
+    "back": "Back"
 }

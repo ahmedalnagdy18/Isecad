@@ -25,5 +25,11 @@
     "productPrice": "سعر المنتج",
     "productQuantity": "كمية المنتج",
     "add": "أضف",
-    "editProduct": "تعديل المنتج"
+    "editProduct": "تعديل المنتج",
+    "select": "اختر",
+    "generate_todays_report": "إنشاء تقرير اليوم",
+    "generate_specific_date_report": "إنشاء تقرير لتاريخ محدد",
+    "generate_all_sales_report": "إنشاء تقرير كل المبيعات",
+    "sales_report": "تقرير المبيعات",
+    "back": "رجوع"
 }
