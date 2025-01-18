@@ -31,5 +31,6 @@
     "generate_specific_date_report": "Generate Report for a Specific Date",
     "generate_all_sales_report": "Generate All Sales Report",
     "sales_report": "Sales Report",
-    "back": "Back"
+    "back": "Back",
+    "outOfStock": "Out of stock"
 }

@@ -66,6 +66,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "select": MessageLookupByLibrary.simpleMessage("Select"),
         "selectQuantity":
             MessageLookupByLibrary.simpleMessage("Select quantity"),
-        "totalPrice": MessageLookupByLibrary.simpleMessage("Total Price")
+        "totalPrice": MessageLookupByLibrary.simpleMessage("Total Price"),
+        "outOfStock": MessageLookupByLibrary.simpleMessage("Out of stock")
       };
 }

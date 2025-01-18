@@ -31,5 +31,6 @@
     "generate_specific_date_report": "إنشاء تقرير لتاريخ محدد",
     "generate_all_sales_report": "إنشاء تقرير كل المبيعات",
     "sales_report": "تقرير المبيعات",
-    "back": "رجوع"
+    "back": "رجوع",
+    "outOfStock": "نفذت الكمية"
 }

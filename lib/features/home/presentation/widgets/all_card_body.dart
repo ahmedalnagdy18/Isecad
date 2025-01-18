@@ -131,35 +131,39 @@ class _AllCardBodyState extends State<AllCardBody> {
                   isLongpress = true;
                   setState(() {});
                 },
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => InvoicePage(
-                        products: [product],
-                      ),
-                    ),
-                  );
-                },
+                onTap: product.quantity != 0
+                    ? () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => InvoicePage(
+                              products: [product],
+                            ),
+                          ),
+                        );
+                      }
+                    : null,
                 child: Row(
                   children: [
                     isLongpress == true
-                        ? Checkbox(
-                            fillColor:
-                                const WidgetStatePropertyAll(Colors.white),
-                            side: const BorderSide(color: Colors.black),
-                            checkColor: Colors.green,
-                            value: isSelected,
-                            onChanged: (value) {
-                              setState(() {
-                                if (value == true) {
-                                  selectedProductIds.add(product.id);
-                                } else {
-                                  selectedProductIds.remove(product.id);
-                                }
-                              });
-                            },
-                          )
+                        ? product.quantity != 0
+                            ? Checkbox(
+                                fillColor:
+                                    const WidgetStatePropertyAll(Colors.white),
+                                side: const BorderSide(color: Colors.black),
+                                checkColor: Colors.green,
+                                value: isSelected,
+                                onChanged: (value) {
+                                  setState(() {
+                                    if (value == true) {
+                                      selectedProductIds.add(product.id);
+                                    } else {
+                                      selectedProductIds.remove(product.id);
+                                    }
+                                  });
+                                },
+                              )
+                            : const SizedBox()
                         : const SizedBox(),
                     Expanded(
                       child: ListTile(
@@ -170,6 +174,12 @@ class _AllCardBodyState extends State<AllCardBody> {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
+                        leading: product.quantity == 0
+                            ? Text(
+                                S.of(context).outOfStock,
+                                style: const TextStyle(color: Colors.red),
+                              )
+                            : null,
                         subtitle: BlocBuilder<ProductCubit, ProductState>(
                           builder: (context, state) {
                             if (state is ProductListLoaded) {

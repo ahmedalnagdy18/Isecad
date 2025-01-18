@@ -65,6 +65,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ابحث عن المنتجات"),
         "select": MessageLookupByLibrary.simpleMessage("اختر"),
         "selectQuantity": MessageLookupByLibrary.simpleMessage("اختر الكمية"),
-        "totalPrice": MessageLookupByLibrary.simpleMessage("السعر الإجمالي")
+        "totalPrice": MessageLookupByLibrary.simpleMessage("السعر الإجمالي"),
+        "outOfStock": MessageLookupByLibrary.simpleMessage("نفذت الكمية")
       };
 }

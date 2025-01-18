@@ -28,12 +28,13 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  excel: ^2.0.4
   cupertino_icons: ^1.0.8
   email_validator: ^3.0.0
+  excel: ^2.0.4
   flutter:
     sdk: flutter
   flutter_bloc: ^9.0.0
+  flutter_launcher_icons: ^0.14.3
   flutter_localization: ^0.3.1
   flutter_multi_select_items: ^0.4.3
   font_awesome_flutter: ^10.8.0
@@ -45,15 +46,27 @@ dependencies:
   shared_preferences: ^2.3.5
 
 dev_dependencies:
+  analyzer: ^6.0.0
+  build_runner: ^2.4.0
   flutter_lints: ^4.0.0
   flutter_localizations:
     sdk: flutter
   flutter_test:
     sdk: flutter
-  build_runner: ^2.4.0
   hive_generator: ^2.0.1
-  analyzer: ^6.0.0
 
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  windows:
+    generate: true
+    image_path: "assets/images/iscad_logo.jpg"
+    icon_size: 48
+  image_path: "assets/images/iscad_logo.jpg"
+  min_sdk_android: 21
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/images/iscad_logo.jpg"
+  
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.
